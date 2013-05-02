@@ -1,0 +1,1 @@
+A GUI for creating patches with xdelta3.
