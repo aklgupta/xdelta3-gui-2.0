@@ -1,6 +1,6 @@
 ﻿namespace xdelta3_GUI
 {
-    partial class Form1
+    partial class Main
     {
         /// <summary>
         /// Required designer variable.
@@ -59,6 +59,7 @@
             this.fullPathCheckBox = new System.Windows.Forms.CheckBox();
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.info = new System.Windows.Forms.Label();
             this.filesGroupBox.SuspendLayout();
             this.optionsGroupBox.SuspendLayout();
             this.SuspendLayout();
@@ -69,7 +70,7 @@
             this.create.Location = new System.Drawing.Point(482, 422);
             this.create.Name = "create";
             this.create.Size = new System.Drawing.Size(90, 40);
-            this.create.TabIndex = 0;
+            this.create.TabIndex = 20;
             this.create.Text = "Create Patch";
             this.toolTip.SetToolTip(this.create, "Create patches using specified settings.");
             this.create.UseVisualStyleBackColor = true;
@@ -80,7 +81,7 @@
             this.clear.Location = new System.Drawing.Point(401, 437);
             this.clear.Name = "clear";
             this.clear.Size = new System.Drawing.Size(75, 25);
-            this.clear.TabIndex = 1;
+            this.clear.TabIndex = 19;
             this.clear.Text = "Clear";
             this.toolTip.SetToolTip(this.clear, "Clear all fields.");
             this.clear.UseVisualStyleBackColor = true;
@@ -109,7 +110,7 @@
             this.destinationButton.Location = new System.Drawing.Point(529, 280);
             this.destinationButton.Name = "destinationButton";
             this.destinationButton.Size = new System.Drawing.Size(25, 20);
-            this.destinationButton.TabIndex = 5;
+            this.destinationButton.TabIndex = 12;
             this.destinationButton.Text = "...";
             this.toolTip.SetToolTip(this.destinationButton, "Browse.");
             this.destinationButton.UseVisualStyleBackColor = true;
@@ -121,7 +122,7 @@
             this.addNew.Location = new System.Drawing.Point(283, 250);
             this.addNew.Name = "addNew";
             this.addNew.Size = new System.Drawing.Size(63, 24);
-            this.addNew.TabIndex = 6;
+            this.addNew.TabIndex = 7;
             this.addNew.Text = "Add";
             this.toolTip.SetToolTip(this.addNew, "Add one or more files to patch to.");
             this.addNew.UseVisualStyleBackColor = true;
@@ -156,7 +157,7 @@
             this.downNew.Location = new System.Drawing.Point(491, 250);
             this.downNew.Name = "downNew";
             this.downNew.Size = new System.Drawing.Size(63, 24);
-            this.downNew.TabIndex = 18;
+            this.downNew.TabIndex = 10;
             this.downNew.Text = "Down";
             this.toolTip.SetToolTip(this.downNew, "Move the selected files down.");
             this.downNew.UseVisualStyleBackColor = true;
@@ -167,7 +168,7 @@
             this.upNew.Location = new System.Drawing.Point(421, 250);
             this.upNew.Name = "upNew";
             this.upNew.Size = new System.Drawing.Size(63, 24);
-            this.upNew.TabIndex = 17;
+            this.upNew.TabIndex = 9;
             this.upNew.Text = "Up";
             this.toolTip.SetToolTip(this.upNew, "Move the selected files up.");
             this.upNew.UseVisualStyleBackColor = true;
@@ -178,7 +179,7 @@
             this.downOld.Location = new System.Drawing.Point(214, 250);
             this.downOld.Name = "downOld";
             this.downOld.Size = new System.Drawing.Size(63, 24);
-            this.downOld.TabIndex = 16;
+            this.downOld.TabIndex = 5;
             this.downOld.Text = "Down";
             this.toolTip.SetToolTip(this.downOld, "Move the selected files down.");
             this.downOld.UseVisualStyleBackColor = true;
@@ -189,7 +190,7 @@
             this.upOld.Location = new System.Drawing.Point(145, 250);
             this.upOld.Name = "upOld";
             this.upOld.Size = new System.Drawing.Size(63, 24);
-            this.upOld.TabIndex = 15;
+            this.upOld.TabIndex = 4;
             this.upOld.Text = "Up";
             this.toolTip.SetToolTip(this.upOld, "Move the selected files up.");
             this.upOld.UseVisualStyleBackColor = true;
@@ -201,7 +202,7 @@
             this.removeNew.Location = new System.Drawing.Point(352, 250);
             this.removeNew.Name = "removeNew";
             this.removeNew.Size = new System.Drawing.Size(63, 24);
-            this.removeNew.TabIndex = 14;
+            this.removeNew.TabIndex = 8;
             this.removeNew.Text = "Remove";
             this.toolTip.SetToolTip(this.removeNew, "Remove the selected files from the list.");
             this.removeNew.UseVisualStyleBackColor = true;
@@ -212,7 +213,7 @@
             this.removeOld.Location = new System.Drawing.Point(76, 250);
             this.removeOld.Name = "removeOld";
             this.removeOld.Size = new System.Drawing.Size(63, 24);
-            this.removeOld.TabIndex = 13;
+            this.removeOld.TabIndex = 3;
             this.removeOld.Text = "Remove";
             this.toolTip.SetToolTip(this.removeOld, "Remove the selected files from the list.");
             this.removeOld.UseVisualStyleBackColor = true;
@@ -223,7 +224,7 @@
             this.destinationTextBox.Location = new System.Drawing.Point(133, 280);
             this.destinationTextBox.Name = "destinationTextBox";
             this.destinationTextBox.Size = new System.Drawing.Size(393, 20);
-            this.destinationTextBox.TabIndex = 12;
+            this.destinationTextBox.TabIndex = 11;
             this.toolTip.SetToolTip(this.destinationTextBox, "The root folder for all files that will be created.");
             // 
             // newListBox
@@ -234,7 +235,7 @@
             this.newListBox.Name = "newListBox";
             this.newListBox.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
             this.newListBox.Size = new System.Drawing.Size(271, 212);
-            this.newListBox.TabIndex = 11;
+            this.newListBox.TabIndex = 6;
             this.toolTip.SetToolTip(this.newListBox, "The list of files to patch to.");
             // 
             // oldListBox
@@ -245,7 +246,7 @@
             this.oldListBox.Name = "oldListBox";
             this.oldListBox.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
             this.oldListBox.Size = new System.Drawing.Size(271, 212);
-            this.oldListBox.TabIndex = 10;
+            this.oldListBox.TabIndex = 1;
             this.toolTip.SetToolTip(this.oldListBox, "The list of files to patch from.");
             // 
             // label3
@@ -303,7 +304,7 @@
             this.zipNameTextBox.Location = new System.Drawing.Point(337, 66);
             this.zipNameTextBox.Name = "zipNameTextBox";
             this.zipNameTextBox.Size = new System.Drawing.Size(217, 20);
-            this.zipNameTextBox.TabIndex = 7;
+            this.zipNameTextBox.TabIndex = 18;
             this.toolTip.SetToolTip(this.zipNameTextBox, "The name of the zip archive to create.");
             // 
             // zipNameLabel
@@ -323,7 +324,7 @@
             this.zipCheckBox.Location = new System.Drawing.Point(283, 43);
             this.zipCheckBox.Name = "zipCheckBox";
             this.zipCheckBox.Size = new System.Drawing.Size(75, 17);
-            this.zipCheckBox.TabIndex = 5;
+            this.zipCheckBox.TabIndex = 17;
             this.zipCheckBox.Text = "Zip all files";
             this.toolTip.SetToolTip(this.zipCheckBox, "When checked, zips all generated files.");
             this.zipCheckBox.UseVisualStyleBackColor = true;
@@ -335,7 +336,7 @@
             this.copyxdeltaCheckBox.Location = new System.Drawing.Point(283, 19);
             this.copyxdeltaCheckBox.Name = "copyxdeltaCheckBox";
             this.copyxdeltaCheckBox.Size = new System.Drawing.Size(172, 17);
-            this.copyxdeltaCheckBox.TabIndex = 4;
+            this.copyxdeltaCheckBox.TabIndex = 16;
             this.copyxdeltaCheckBox.Text = "Copy xdelta3 to patch directory";
             this.toolTip.SetToolTip(this.copyxdeltaCheckBox, "When checked, xdelta3 GUI will place a copy of xdelta3.exe in the root folder.");
             this.copyxdeltaCheckBox.UseVisualStyleBackColor = true;
@@ -345,7 +346,7 @@
             this.patchSubDirTextBox.Location = new System.Drawing.Point(78, 66);
             this.patchSubDirTextBox.Name = "patchSubDirTextBox";
             this.patchSubDirTextBox.Size = new System.Drawing.Size(196, 20);
-            this.patchSubDirTextBox.TabIndex = 3;
+            this.patchSubDirTextBox.TabIndex = 15;
             this.toolTip.SetToolTip(this.patchSubDirTextBox, "Subdirectory to put the generated patch files in (relative to the root folder spe" +
         "cified above).");
             // 
@@ -366,7 +367,7 @@
             this.batchOnlyCheckBox.Location = new System.Drawing.Point(9, 43);
             this.batchOnlyCheckBox.Name = "batchOnlyCheckBox";
             this.batchOnlyCheckBox.Size = new System.Drawing.Size(92, 17);
-            this.batchOnlyCheckBox.TabIndex = 1;
+            this.batchOnlyCheckBox.TabIndex = 14;
             this.batchOnlyCheckBox.Text = "Batch file only";
             this.toolTip.SetToolTip(this.batchOnlyCheckBox, "When checked, xdelta3 GUI will generate a batch file to make the patches with, bu" +
         "t will not actually make the patches itself.");
@@ -379,7 +380,7 @@
             this.fullPathCheckBox.Location = new System.Drawing.Point(9, 19);
             this.fullPathCheckBox.Name = "fullPathCheckBox";
             this.fullPathCheckBox.Size = new System.Drawing.Size(98, 17);
-            this.fullPathCheckBox.TabIndex = 0;
+            this.fullPathCheckBox.TabIndex = 13;
             this.fullPathCheckBox.Text = "Show full paths";
             this.toolTip.SetToolTip(this.fullPathCheckBox, "When checked, shows full file paths instead of just file names.");
             this.fullPathCheckBox.UseVisualStyleBackColor = true;
@@ -395,17 +396,28 @@
             this.toolTip.InitialDelay = 1000;
             this.toolTip.ReshowDelay = 500;
             // 
-            // Form1
+            // info
+            // 
+            this.info.AutoSize = true;
+            this.info.Enabled = false;
+            this.info.Location = new System.Drawing.Point(12, 426);
+            this.info.Name = "info";
+            this.info.Size = new System.Drawing.Size(155, 39);
+            this.info.TabIndex = 21;
+            this.info.Text = "xdelta3 GUI by Jordi Vermeulen\r\nCopyright 2013\r\nUses xdelta3 v3.0.6";
+            // 
+            // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(584, 474);
+            this.Controls.Add(this.info);
             this.Controls.Add(this.optionsGroupBox);
             this.Controls.Add(this.filesGroupBox);
             this.Controls.Add(this.clear);
             this.Controls.Add(this.create);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Name = "Form1";
+            this.Name = "Main";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "xdelta3 GUI";
             this.filesGroupBox.ResumeLayout(false);
@@ -413,6 +425,7 @@
             this.optionsGroupBox.ResumeLayout(false);
             this.optionsGroupBox.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -448,6 +461,7 @@
         private System.Windows.Forms.TextBox zipNameTextBox;
         private System.Windows.Forms.Label zipNameLabel;
         private System.Windows.Forms.ToolTip toolTip;
+        private System.Windows.Forms.Label info;
     }
 }
 

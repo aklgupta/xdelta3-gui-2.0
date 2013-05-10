@@ -7,54 +7,59 @@ using System.Windows.Forms;
 
 namespace xdelta3_GUI
 {
-    public partial class Form1 : Form
+    public partial class Main : Form
     {
-        ListBox openFileDialogueCaller;
-        List<string> oldFiles, oldFileNames, newFiles, newFileNames;
+        private ListBox openFileDialogueCaller;
+        private List<string> oldFiles, oldFileNames, newFiles, newFileNames;
 
-        public Form1()
+        public Main()
         {
-            InitializeComponent();
-            oldFiles = new List<string>();
-            oldFileNames = new List<string>();
-            newFiles = new List<string>();
-            newFileNames = new List<string>();
+            this.InitializeComponent();
+            this.oldFiles = new List<string>();
+            this.oldFileNames = new List<string>();
+            this.newFiles = new List<string>();
+            this.newFileNames = new List<string>();
         }
 
         #region Button_Click_Events
 
         private void create_Click(object sender, EventArgs e)
         {
-            string dest = destinationTextBox.Text;
-            string subDir = patchSubDirTextBox.Text;
-            string zipName = zipNameTextBox.Text;
+            string dest = this.destinationTextBox.Text;
+            string subDir = this.patchSubDirTextBox.Text;
+            string zipName = this.zipNameTextBox.Text;
 
-            if (oldFiles.Count != newFiles.Count)
+            if (this.oldFiles.Count != this.newFiles.Count)
             {
                 MessageBox.Show("Number of files don't match. Please ensure there are the same number of files on both sides.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            else if (oldFiles.Count == 0)
+
+            if (this.oldFiles.Count == 0)
             {
                 MessageBox.Show("No files to patch!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            else if (destinationTextBox.Text == "")
+
+            if (this.destinationTextBox.Text == "")
             {
                 MessageBox.Show("Please enter a destination.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            else if (!Path.IsPathRooted(dest) || dest.IndexOfAny(Path.GetInvalidPathChars()) != -1)
+
+            if (!Path.IsPathRooted(dest) || dest.IndexOfAny(Path.GetInvalidPathChars()) != -1)
             {
                 MessageBox.Show("Invalid destination path.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            else if (subDir.IndexOfAny(Path.GetInvalidFileNameChars()) != -1)
+
+            if (subDir.IndexOfAny(Path.GetInvalidFileNameChars()) != -1)
             {
                 MessageBox.Show("Invalid subdirectory name.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            else if (zipName.IndexOfAny(Path.GetInvalidFileNameChars()) != -1)
+
+            if (zipName.IndexOfAny(Path.GetInvalidFileNameChars()) != -1)
             {
                 MessageBox.Show("Invalid .zip file name.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
@@ -66,7 +71,7 @@ namespace xdelta3_GUI
                 subDir += "\\";
 
             string tempDir = "";
-            if (zipCheckBox.Checked)
+            if (this.zipCheckBox.Checked)
             {
                 char[] chars = new char[17];
                 Random random = new Random();
@@ -85,14 +90,14 @@ namespace xdelta3_GUI
                 Directory.CreateDirectory(dest + tempDir + subDir);
 
             StreamWriter patchWriter = new StreamWriter(dest + tempDir + "patch.bat");
-            for (int i = 0; i < oldFiles.Count; i++)
+            for (int i = 0; i < this.oldFiles.Count; i++)
             {
-                patchWriter.WriteLine("xdelta3.exe -d -s \"{0}\" \"{1}.diff\" \"{2}\"", oldFileNames[i], subDir + (i + 1).ToString(), newFileNames[i]);
+                patchWriter.WriteLine("xdelta3.exe -d -s \"{0}\" \"{1}.diff\" \"{2}\"", this.oldFileNames[i], subDir + (i + 1).ToString(), this.newFileNames[i]);
                 if (!batchOnlyCheckBox.Checked)
                 {
                     Process p = new Process();
                     p.StartInfo.FileName = "xdelta3.exe";
-                    p.StartInfo.Arguments = "-e -s \"" + oldFiles[i] + "\" \"" + newFiles[i] + "\" \"" + dest + tempDir + subDir + (i + 1).ToString() + ".diff\"";
+                    p.StartInfo.Arguments = "-e -s \"" + this.oldFiles[i] + "\" \"" + this.newFiles[i] + "\" \"" + dest + tempDir + subDir + (i + 1).ToString() + ".diff\"";
                     p.StartInfo.CreateNoWindow = true;
                     p.Start();
                     p.WaitForExit();
@@ -100,21 +105,21 @@ namespace xdelta3_GUI
             }
             patchWriter.Close();
 
-            if (batchOnlyCheckBox.Checked)
+            if (this.batchOnlyCheckBox.Checked)
             {
                 StreamWriter makePatchWriter = new StreamWriter(dest + "makepatch.bat");
-                for (int i = 0; i < oldFiles.Count; i++)
-                    makePatchWriter.WriteLine("xdelta3.exe -e -s \"{0}\" \"{1}\" \"{2}.diff\"", oldFiles[i], newFiles[i], dest + subDir + (i + 1).ToString());
+                for (int i = 0; i < this.oldFiles.Count; i++)
+                    makePatchWriter.WriteLine("xdelta3.exe -e -s \"{0}\" \"{1}\" \"{2}.diff\"", this.oldFiles[i], this.newFiles[i], dest + subDir + (i + 1).ToString());
                 makePatchWriter.Close();
             }
 
-            if (copyxdeltaCheckBox.Checked)
+            if (this.copyxdeltaCheckBox.Checked)
                 File.Copy("xdelta3.exe", dest + tempDir + "xdelta3.exe");
 
-            if (zipCheckBox.Checked)
+            if (this.zipCheckBox.Checked)
             {
                 StreamWriter listWriter = new StreamWriter(dest + tempDir + "filelist.txt");
-                if (copyxdeltaCheckBox.Checked)
+                if (this.copyxdeltaCheckBox.Checked)
                     listWriter.WriteLine("xdelta3.exe");
                 listWriter.WriteLine("patch.bat");
                 for (int i = 0; i < oldFiles.Count; i++)
@@ -134,30 +139,28 @@ namespace xdelta3_GUI
 
         private void clear_Click(object sender, EventArgs e)
         {
-            DialogResult result = MessageBox.Show("Clear all fields?", "", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (result == DialogResult.Yes)
+            if (MessageBox.Show("Clear all fields?", "", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                oldFiles.Clear();
-                oldFileNames.Clear();
-                newFiles.Clear();
-                newFileNames.Clear();
-                destinationTextBox.Clear();
-                oldListBox.DataSource = null;
-                newListBox.DataSource = null;
-                patchSubDirTextBox.Clear();
-                zipNameTextBox.Clear();
-                zipCheckBox.Checked = false;
-                copyxdeltaCheckBox.Checked = false;
-                batchOnlyCheckBox.Checked = false;
-                fullPathCheckBox.Checked = false;
+                this.oldFiles.Clear();
+                this.oldFileNames.Clear();
+                this.newFiles.Clear();
+                this.newFileNames.Clear();
+                this.destinationTextBox.Clear();
+                this.oldListBox.DataSource = null;
+                this.newListBox.DataSource = null;
+                this.patchSubDirTextBox.Clear();
+                this.zipNameTextBox.Clear();
+                this.zipCheckBox.Checked = false;
+                this.copyxdeltaCheckBox.Checked = false;
+                this.batchOnlyCheckBox.Checked = false;
+                this.fullPathCheckBox.Checked = false;
             }
         }
 
         private void destinationButton_Click(object sender, EventArgs e)
         {
-            DialogResult result = folderBrowserDialog.ShowDialog();
-            if (result == DialogResult.OK)
-                destinationTextBox.Text = folderBrowserDialog.SelectedPath;
+            if (this.folderBrowserDialog.ShowDialog() == DialogResult.OK)
+                this.destinationTextBox.Text = this.folderBrowserDialog.SelectedPath;
         }
 
         private void move(ListBox box, List<string> files, List<string> fileNames, bool up)
@@ -176,6 +179,7 @@ namespace xdelta3_GUI
                     top += up ? 1 : -1;
                     continue;
                 }
+
                 int offset = up ? -1 : 1;
                 string temp = files[indices[i] + offset];
                 files[indices[i] + offset] = files[indices[i]];
@@ -189,42 +193,30 @@ namespace xdelta3_GUI
             }
 
             box.DataSource = null;
-            box.DataSource = fullPathCheckBox.Checked ? files : fileNames;
+            box.DataSource = this.fullPathCheckBox.Checked ? files : fileNames;
             box.ClearSelected();
             foreach (int i in indices)
                 box.SelectedIndex = i;
         }
 
-        private void upOld_Click(object sender, EventArgs e)
-        {
-            move(oldListBox, oldFiles, oldFileNames, true);
-        }
+        private void upOld_Click(object sender, EventArgs e) { this.move(oldListBox, oldFiles, oldFileNames, true); }
 
-        private void upNew_Click(object sender, EventArgs e)
-        {
-            move(newListBox, newFiles, newFileNames, true);
-        }
+        private void upNew_Click(object sender, EventArgs e) { this.move(newListBox, newFiles, newFileNames, true); }
 
-        private void downOld_Click(object sender, EventArgs e)
-        {
-            move(oldListBox, oldFiles, oldFileNames, false);
-        }
+        private void downOld_Click(object sender, EventArgs e) { this.move(oldListBox, oldFiles, oldFileNames, false); }
 
-        private void downNew_Click(object sender, EventArgs e)
-        {
-            move(newListBox, newFiles, newFileNames, false);
-        }
+        private void downNew_Click(object sender, EventArgs e) { this.move(newListBox, newFiles, newFileNames, false); }
 
         private void addNewButton_Click(object sender, EventArgs e)
         {
-            openFileDialogueCaller = newListBox;
-            openFileDialog.ShowDialog();
+            this.openFileDialogueCaller = this.newListBox;
+            this.openFileDialog.ShowDialog();
         }
 
         private void addOldButton_Click(object sender, EventArgs e)
         {
-            openFileDialogueCaller = oldListBox;
-            openFileDialog.ShowDialog();
+            this.openFileDialogueCaller = this.oldListBox;
+            this.openFileDialog.ShowDialog();
         }
 
         private void remove(ListBox box, List<string> files, List<string> fileNames)
@@ -242,18 +234,12 @@ namespace xdelta3_GUI
             }
 
             box.DataSource = null;
-            box.DataSource = fullPathCheckBox.Checked ? files : fileNames;
+            box.DataSource = this.fullPathCheckBox.Checked ? files : fileNames;
         }
 
-        private void removeOld_Click(object sender, EventArgs e)
-        {
-            remove(oldListBox, oldFiles, oldFileNames);
-        }
+        private void removeOld_Click(object sender, EventArgs e) { this.remove(oldListBox, oldFiles, oldFileNames); }
 
-        private void removeNew_Click(object sender, EventArgs e)
-        {
-            remove(newListBox, newFiles, newFileNames);
-        }
+        private void removeNew_Click(object sender, EventArgs e) { this.remove(newListBox, newFiles, newFileNames); }
 
         #endregion
 
@@ -261,8 +247,8 @@ namespace xdelta3_GUI
 
         private void fullPathCheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            ListBox.SelectedIndexCollection oldSelection = oldListBox.SelectedIndices;
-            ListBox.SelectedIndexCollection newSelection = newListBox.SelectedIndices;
+            ListBox.SelectedIndexCollection oldSelection = this.oldListBox.SelectedIndices;
+            ListBox.SelectedIndexCollection newSelection = this.newListBox.SelectedIndices;
 
             List<int> oldIndices = new List<int>();
             List<int> newIndices = new List<int>();
@@ -272,29 +258,26 @@ namespace xdelta3_GUI
             foreach (int s in newSelection)
                 newIndices.Add(s);
 
-            oldListBox.DataSource = fullPathCheckBox.Checked ? oldFiles : oldFileNames;
-            newListBox.DataSource = fullPathCheckBox.Checked ? newFiles : newFileNames;
+            this.oldListBox.DataSource = this.fullPathCheckBox.Checked ? this.oldFiles : this.oldFileNames;
+            this.newListBox.DataSource = this.fullPathCheckBox.Checked ? this.newFiles : this.newFileNames;
 
-            oldListBox.ClearSelected();
-            newListBox.ClearSelected();
+            this.oldListBox.ClearSelected();
+            this.newListBox.ClearSelected();
 
             foreach (int s in oldIndices)
-                oldListBox.SelectedIndex = s;
+                this.oldListBox.SelectedIndex = s;
             foreach (int s in newIndices)
-                newListBox.SelectedIndex = s;
+                this.newListBox.SelectedIndex = s;
         }
 
         private void zipCheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            zipNameTextBox.Enabled = !zipNameTextBox.Enabled;
-            zipNameLabel.Enabled = !zipNameLabel.Enabled;
-            batchOnlyCheckBox.Enabled = !zipCheckBox.Checked;
+            this.zipNameTextBox.Enabled = !this.zipNameTextBox.Enabled;
+            this.zipNameLabel.Enabled = !this.zipNameLabel.Enabled;
+            this.batchOnlyCheckBox.Enabled = !this.zipCheckBox.Checked;
         }
 
-        private void batchOnlyCheckBox_CheckedChanged(object sender, EventArgs e)
-        {
-            zipCheckBox.Enabled = !batchOnlyCheckBox.Checked;
-        }
+        private void batchOnlyCheckBox_CheckedChanged(object sender, EventArgs e) { this.zipCheckBox.Enabled = !this.batchOnlyCheckBox.Checked; }
 
         #endregion
 
@@ -304,72 +287,45 @@ namespace xdelta3_GUI
         {
             string[] files = new string[0];
 
-            try
-            {
-                files = openFileDialog.FileNames;
-            }
+            try { files = this.openFileDialog.FileNames; }
             catch (NotSupportedException)
             {
                 MessageBox.Show("Unsupported file path.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            if (openFileDialogueCaller == newListBox)
+            if (this.openFileDialogueCaller == this.newListBox)
             {
                 for (int i = 0; i < files.Length; i++)
                 {
-                    if (newFiles.Contains(files[i]))
+                    if (this.newFiles.Contains(files[i]))
                         continue;
-                    newFiles.Add(files[i]);
+                    this.newFiles.Add(files[i]);
 
                     string[] parts = files[i].Split('\\');
-                    newFileNames.Add(parts[parts.Length - 1]);
+                    this.newFileNames.Add(parts[parts.Length - 1]);
                 }
 
-                newListBox.DataSource = null;
-                newListBox.DataSource = fullPathCheckBox.Checked ? newFiles : newFileNames;
+                this.newListBox.DataSource = null;
+                this.newListBox.DataSource = this.fullPathCheckBox.Checked ? this.newFiles : this.newFileNames;
             }
-            else if (openFileDialogueCaller == oldListBox)
+            else if (this.openFileDialogueCaller == this.oldListBox)
             {
                 for (int i = 0; i < files.Length; i++)
                 {
-                    if (oldFiles.Contains(files[i]))
+                    if (this.oldFiles.Contains(files[i]))
                         continue;
-                    oldFiles.Add(files[i]);
+                    this.oldFiles.Add(files[i]);
 
                     string[] parts = files[i].Split('\\');
-                    oldFileNames.Add(parts[parts.Length - 1]);
+                    this.oldFileNames.Add(parts[parts.Length - 1]);
                 }
-                oldListBox.DataSource = null;
-                oldListBox.DataSource = fullPathCheckBox.Checked ? oldFiles : oldFileNames;
+
+                this.oldListBox.DataSource = null;
+                this.oldListBox.DataSource = this.fullPathCheckBox.Checked ? this.oldFiles : this.oldFileNames;
             }
         }
 
         #endregion
-
-        /*
-        private void oldListBox_MouseDown(object sender, MouseEventArgs e)
-        {
-            if (oldListBox.SelectedItem == null)
-                return;
-            oldListBox.DoDragDrop(oldListBox.SelectedItem, DragDropEffects.Move);
-        }
-
-        private void oldListBox_DragOver(object sender, DragEventArgs e)
-        {
-            e.Effect = DragDropEffects.Move;
-        }
-
-        private void oldListBox_DragDrop(object sender, DragEventArgs e)
-        {
-            Point point = oldListBox.PointToClient(new Point(e.X, e.Y));
-            int index = oldListBox.IndexFromPoint(point);
-            if (index < 0)
-                index = oldListBox.Items.Count - 1;
-            object data = e.Data.GetData(typeof(string));
-            oldListBox.Items.Remove(data);
-            oldListBox.Items.Insert(index, data);
-        }
-        */
     }
 }
