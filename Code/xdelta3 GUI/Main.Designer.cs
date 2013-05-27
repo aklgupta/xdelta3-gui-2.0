@@ -419,7 +419,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "Main";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "xdelta3 GUI";
+            this.Text = "xdelta3 GUI 1.1";
             this.filesGroupBox.ResumeLayout(false);
             this.filesGroupBox.PerformLayout();
             this.optionsGroupBox.ResumeLayout(false);

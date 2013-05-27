@@ -122,14 +122,14 @@ namespace xdelta3_GUI
                 if (this.copyxdeltaCheckBox.Checked)
                     listWriter.WriteLine("xdelta3.exe");
                 listWriter.WriteLine("patch.bat");
-                for (int i = 0; i < oldFiles.Count; i++)
+                for (int i = 0; i < this.oldFiles.Count; i++)
                     listWriter.WriteLine(subDir + (i + 1).ToString() + ".diff");
                 listWriter.Close();
 
                 Process p = new Process();
                 p.StartInfo.FileName = Directory.GetCurrentDirectory() + "\\7za.exe";
                 p.StartInfo.WorkingDirectory = dest + tempDir;
-                p.StartInfo.Arguments = "a -tzip " + dest + zipName + ".zip -mx9 @\"" + dest + tempDir + "filelist.txt\"";
+                p.StartInfo.Arguments = "a -tzip \"" + dest + zipName + ".zip\" -mx9 @\"" + dest + tempDir + "filelist.txt\"";
                 p.StartInfo.CreateNoWindow = true;
                 p.Start();
                 p.WaitForExit();
