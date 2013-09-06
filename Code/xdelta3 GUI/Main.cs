@@ -90,9 +90,11 @@ namespace xdelta3_GUI
                 Directory.CreateDirectory(dest + tempDir + subDir);
 
             StreamWriter patchWriter = new StreamWriter(dest + tempDir + "patch.bat");
+            patchWriter.Write("mkdir old");
             for (int i = 0; i < this.oldFiles.Count; i++)
             {
                 patchWriter.WriteLine("xdelta3.exe -d -s \"{0}\" \"{1}.diff\" \"{2}\"", this.oldFileNames[i], subDir + (i + 1).ToString(), this.newFileNames[i]);
+                patchWriter.WriteLine("move \"{0}\" old", this.oldFileNames[i]);
                 if (!batchOnlyCheckBox.Checked)
                 {
                     Process p = new Process();
