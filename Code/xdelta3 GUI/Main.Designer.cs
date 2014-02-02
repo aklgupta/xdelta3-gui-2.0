@@ -400,11 +400,11 @@
             // 
             this.info.AutoSize = true;
             this.info.Enabled = false;
-            this.info.Location = new System.Drawing.Point(12, 426);
+            this.info.Location = new System.Drawing.Point(9, 436);
             this.info.Name = "info";
-            this.info.Size = new System.Drawing.Size(155, 39);
+            this.info.Size = new System.Drawing.Size(155, 26);
             this.info.TabIndex = 21;
-            this.info.Text = "xdelta3 GUI by Jordi Vermeulen\r\nCopyright 2013\r\nUses xdelta3 v3.0.6";
+            this.info.Text = "xdelta3 GUI by Jordi Vermeulen\r\nUses xdelta3 v3.0.8";
             // 
             // Main
             // 
@@ -419,7 +419,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "Main";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "xdelta3 GUI 1.1";
+            this.Text = "xdelta3 GUI 1.2.1";
             this.filesGroupBox.ResumeLayout(false);
             this.filesGroupBox.PerformLayout();
             this.optionsGroupBox.ResumeLayout(false);
