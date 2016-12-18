@@ -1,0 +1,15 @@
+G:\My Videos 4\!Anime\!Tools\Patch maker\xdeltagui\xdelta3-gui-master\xdelta3-gui-master\Code\xdelta3 GUI\bin\Debug\xdelta3.exe
+G:\My Videos 4\!Anime\!Tools\Patch maker\xdeltagui\xdelta3-gui-master\xdelta3-gui-master\Code\xdelta3 GUI\bin\Debug\7za.exe
+G:\My Videos 4\!Anime\!Tools\Patch maker\xdeltagui\xdelta3-gui-master\xdelta3-gui-master\Code\xdelta3 GUI\obj\x86\Debug\xdelta3_GUI.Main.resources
+G:\My Videos 4\!Anime\!Tools\Patch maker\xdeltagui\xdelta3-gui-master\xdelta3-gui-master\Code\xdelta3 GUI\obj\x86\Debug\xdelta3_GUI.Properties.Resources.resources
+G:\My Videos 4\!Anime\!Tools\Patch maker\xdeltagui\xdelta3-gui-master\xdelta3-gui-master\Code\xdelta3 GUI\obj\x86\Debug\xdelta3 GUI.csproj.GenerateResource.Cache
+G:\My Videos 4\!Anime\!Tools\Patch maker\xdeltagui\xdelta3-gui-master\xdelta3-gui-master\Code\xdelta3 GUI\obj\x86\Debug\xdelta3 GUI.csprojResolveAssemblyReference.cache
+G:\My Videos 4\!Anime\!Tools\Patch maker\xdeltagui\xdelta3-gui-master\xdelta3-gui-master\Code\xdelta3 GUI\bin\Debug\Microsoft.WindowsAPICodePack.dll
+G:\My Videos 4\!Anime\!Tools\Patch maker\xdeltagui\xdelta3-gui-master\xdelta3-gui-master\Code\xdelta3 GUI\bin\Debug\Microsoft.WindowsAPICodePack.Shell.dll
+G:\My Videos 4\!Anime\!Tools\Patch maker\xdeltagui\xdelta3-gui-master\xdelta3-gui-master\Code\xdelta3 GUI\bin\Debug\Microsoft.WindowsAPICodePack.pdb
+G:\My Videos 4\!Anime\!Tools\Patch maker\xdeltagui\xdelta3-gui-master\xdelta3-gui-master\Code\xdelta3 GUI\bin\Debug\Microsoft.WindowsAPICodePack.Shell.pdb
+G:\My Videos 4\!Anime\!Tools\Patch maker\xdeltagui\xdelta3-gui-master\xdelta3-gui-master\Code\xdelta3 GUI\bin\Debug\xdelta3 GUI 2.0.exe
+G:\My Videos 4\!Anime\!Tools\Patch maker\xdeltagui\xdelta3-gui-master\xdelta3-gui-master\Code\xdelta3 GUI\bin\Debug\xdelta3 GUI 2.0.pdb
+G:\My Videos 4\!Anime\!Tools\Patch maker\xdeltagui\xdelta3-gui-master\xdelta3-gui-master\Code\xdelta3 GUI\obj\x86\Debug\xdelta3 GUI 2.0.g.resources
+G:\My Videos 4\!Anime\!Tools\Patch maker\xdeltagui\xdelta3-gui-master\xdelta3-gui-master\Code\xdelta3 GUI\obj\x86\Debug\xdelta3 GUI 2.0.exe
+G:\My Videos 4\!Anime\!Tools\Patch maker\xdeltagui\xdelta3-gui-master\xdelta3-gui-master\Code\xdelta3 GUI\obj\x86\Debug\xdelta3 GUI 2.0.pdb

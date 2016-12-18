@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
+using Microsoft.WindowsAPICodePack.Dialogs;
 
 namespace xdelta3_GUI
 {
@@ -19,14 +20,18 @@ namespace xdelta3_GUI
             this.oldFileNames = new List<string>();
             this.newFiles = new List<string>();
             this.newFileNames = new List<string>();
+                                 
         }
 
         #region Button_Click_Events
+
+     
 
         private void create_Click(object sender, EventArgs e)
         {
             string dest = this.destinationTextBox.Text;
             string subDir = this.patchSubDirTextBox.Text;
+            string xdeltaargs = this.xdeltaargs.Text;
             string zipName = this.zipNameTextBox.Text;
 
             if (this.oldFiles.Count != this.newFiles.Count)
@@ -44,6 +49,12 @@ namespace xdelta3_GUI
             if (this.destinationTextBox.Text == "")
             {
                 MessageBox.Show("Please enter a destination.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (this.xdeltaargs.Text == "")
+            { 
+                MessageBox.Show("Please enter xdelta compression arguments.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -89,60 +100,82 @@ namespace xdelta3_GUI
             if (!Directory.Exists(dest + tempDir + subDir))
                 Directory.CreateDirectory(dest + tempDir + subDir);
 
-            StreamWriter patchWriter = new StreamWriter(dest + tempDir + "patch.bat");
+
+
+            //Patch creater//
+                //Readme.txt creation//
+            StreamWriter readmeWriter = new StreamWriter(dest + tempDir + "1.Readme.txt");
+            readmeWriter.WriteLine("1. Copy your original files into this folder. DO NOT RENAME!!"); 
+            readmeWriter.WriteLine("2. Run the 3.Apply Patch file, a CMD window will open and will start patching automatically.");
+            readmeWriter.WriteLine("3. Once patching is complete you will find your new files in the main folder and the orginals in a folder called 'Old'.");
+            readmeWriter.WriteLine("4. Enjoy.");
+            readmeWriter.Close();
+
+                //Changelog.txt creation//
+            StreamWriter changelogWriter = new StreamWriter(dest + tempDir + "2.Changelog.txt");
+            changelogWriter.Close();
+
+                //Batch creation//
+            StreamWriter patchWriter = new StreamWriter(dest + tempDir + "3.Apply Patch.bat");
+            patchWriter.WriteLine("@echo off");
             patchWriter.WriteLine("mkdir old");
             for (int i = 0; i < this.oldFiles.Count; i++)
             {
-                patchWriter.WriteLine("xdelta3.exe -d -s \"{0}\" \"{1}.diff\" \"{2}\"", this.oldFileNames[i], subDir + (i + 1).ToString(), this.newFileNames[i]);
+                patchWriter.WriteLine(".\\" + subDir + "xdelta-3.1.0-x86_64.exe -v -d -s \"{0}\" " + "\".\\" + subDir + "{0}.vcdiff\" \"{2}\"", this.oldFileNames[i], subDir + (i + 1).ToString(), this.newFileNames[i]);
                 patchWriter.WriteLine("move \"{0}\" old", this.oldFileNames[i]);
                 if (!batchOnlyCheckBox.Checked)
                 {
                     Process p = new Process();
-                    p.StartInfo.FileName = "xdelta3.exe";
-                    p.StartInfo.Arguments = "-e -s \"" + this.oldFiles[i] + "\" \"" + this.newFiles[i] + "\" \"" + dest + tempDir + subDir + (i + 1).ToString() + ".diff\"";
+                    p.StartInfo.FileName = "xdelta-3.1.0-x86_64.exe";
+                    p.StartInfo.Arguments = xdeltaargs + " " + "\"" + this.oldFiles[i] + "\" \"" + this.newFiles[i] + "\" \"" + dest + tempDir + subDir + this.oldFileNames[i] + ".vcdiff\"";
                     p.StartInfo.CreateNoWindow = true;
                     p.Start();
                     p.WaitForExit();
                 }
+                
             }
             patchWriter.Close();
+            MessageBox.Show("Patch(s) created successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             if (this.batchOnlyCheckBox.Checked)
             {
-                StreamWriter makePatchWriter = new StreamWriter(dest + "makepatch.bat");
+                StreamWriter makePatchWriter = new StreamWriter(dest + "Make Patch.bat");
                 for (int i = 0; i < this.oldFiles.Count; i++)
-                    makePatchWriter.WriteLine("xdelta3.exe -e -s \"{0}\" \"{1}\" \"{2}.diff\"", this.oldFiles[i], this.newFiles[i], dest + subDir + (i + 1).ToString());
+                    makePatchWriter.WriteLine(".\\" + subDir + "xdelta-3.1.0-x86_64.exe " + xdeltaargs + " " + "\"{0}\" \"{1}\" \"{0}.vcdiff\"", this.oldFiles[i], this.newFiles[i], dest + subDir + (i + 1).ToString());
+                File.Copy("xdelta-3.1.0-x86_64.exe", dest + tempDir + subDir + "xdelta-3.1.0-x86_64.exe", true);    
                 makePatchWriter.Close();
+
             }
 
             if (this.copyxdeltaCheckBox.Checked)
-                File.Copy("xdelta3.exe", dest + tempDir + "xdelta3.exe");
+                File.Copy("xdelta-3.1.0-x86_64.exe", dest + tempDir + subDir + "xdelta-3.1.0-x86_64.exe", true);
 
             if (this.zipCheckBox.Checked)
             {
-                StreamWriter listWriter = new StreamWriter(dest + tempDir + "filelist.txt");
+                StreamWriter listWriter = new StreamWriter(dest + tempDir + "File List.txt");
                 if (this.copyxdeltaCheckBox.Checked)
-                    listWriter.WriteLine("xdelta3.exe");
-                listWriter.WriteLine("patch.bat");
+                    listWriter.WriteLine("xdelta-3.1.0-x86_64.exe");
+                listWriter.WriteLine("Apply Patch.bat");
                 for (int i = 0; i < this.oldFiles.Count; i++)
-                    listWriter.WriteLine(subDir + (i + 1).ToString() + ".diff");
+                    listWriter.WriteLine(subDir + (i + 1).ToString() + ".vcdiff");
                 listWriter.Close();
 
                 Process p = new Process();
                 p.StartInfo.FileName = Directory.GetCurrentDirectory() + "\\7za.exe";
                 p.StartInfo.WorkingDirectory = dest + tempDir;
-                p.StartInfo.Arguments = "a -tzip \"" + dest + zipName + ".zip\" -mx9 @\"" + dest + tempDir + "filelist.txt\"";
+                p.StartInfo.Arguments = "a -tzip \"" + dest + zipName + ".zip\" -mx9 @\"" + dest + tempDir + "File List.txt\"";
                 p.StartInfo.CreateNoWindow = true;
                 p.Start();
                 p.WaitForExit();
                 Directory.Delete(dest + tempDir, true);
             }
         }
-
+    
         private void clear_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("Clear all fields?", "", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
+                
                 this.oldFiles.Clear();
                 this.oldFileNames.Clear();
                 this.newFiles.Clear();
@@ -161,8 +194,17 @@ namespace xdelta3_GUI
 
         private void destinationButton_Click(object sender, EventArgs e)
         {
-            if (this.folderBrowserDialog.ShowDialog() == DialogResult.OK)
-                this.destinationTextBox.Text = this.folderBrowserDialog.SelectedPath;
+           // if (this.folderBrowserDialog.ShowDialog() == DialogResult.OK)
+           // this.destinationTextBox.Text = this.folderBrowserDialog.SelectedPath;
+
+            //Open updated folder browser window
+            CommonOpenFileDialog dialog = new CommonOpenFileDialog();
+            dialog.InitialDirectory = destinationTextBox.Text;
+            dialog.IsFolderPicker = true;
+            if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
+            {
+                destinationTextBox.Text = dialog.FileName;
+            }
         }
 
         private void move(ListBox box, List<string> files, List<string> fileNames, bool up)
@@ -201,6 +243,56 @@ namespace xdelta3_GUI
                 box.SelectedIndex = i;
         }
 
+        //Enable drag and drop to OLD List//
+        private void oldListBox_DragEnter(object sender, System.Windows.Forms.DragEventArgs e)
+        {
+            e.Effect = DragDropEffects.All;
+        }
+
+        private string OldGetFileName(string path)
+        {
+            return Path.GetFileNameWithoutExtension(path);
+        }
+
+        private void oldListBox_DragDrop(object sender, System.Windows.Forms.DragEventArgs e)
+        {
+            //Take dropped items and store in array
+            string[] OldDroppedFiles = (string[])e.Data.GetData(DataFormats.FileDrop, false);
+
+            //Loop through all dropped items and display them
+            foreach (string file in OldDroppedFiles)
+                //   oldListBox.Items.Add(file);
+            {
+                string filename = OldGetFileName(file);
+                oldListBox.Items.Add(filename);
+            }
+                  
+        }
+        
+        //Enable drag and drop to NEW List//
+        private void newListBox_DragEnter(object sender, System.Windows.Forms.DragEventArgs e)
+        {
+            e.Effect = DragDropEffects.All;
+        }
+        private string NewGetFileName(string path)
+        {
+            return Path.GetFileNameWithoutExtension(path);
+        }
+
+        private void newListBox_DragDrop(object sender, System.Windows.Forms.DragEventArgs e)
+        {
+            //Take dropped items and store in array
+            string[] NewDroppedFiles = (string[])e.Data.GetData(DataFormats.FileDrop, false);
+
+            //Loop through all dropped items and display them
+            foreach (string file in NewDroppedFiles)
+            //   newListBox.Items.Add(file);
+            {
+                string filename = NewGetFileName(file);
+                newListBox.Items.Add(filename);
+            }
+        }
+        
         private void upOld_Click(object sender, EventArgs e) { this.move(oldListBox, oldFiles, oldFileNames, true); }
 
         private void upNew_Click(object sender, EventArgs e) { this.move(newListBox, newFiles, newFileNames, true); }
@@ -329,5 +421,9 @@ namespace xdelta3_GUI
         }
 
         #endregion
+
+        
+
+                   
     }
 }

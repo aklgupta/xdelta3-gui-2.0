@@ -59,15 +59,18 @@
             this.fullPathCheckBox = new System.Windows.Forms.CheckBox();
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.xdeltaargs = new System.Windows.Forms.TextBox();
             this.info = new System.Windows.Forms.Label();
+            this.xdeltaGroupBox = new System.Windows.Forms.GroupBox();
             this.filesGroupBox.SuspendLayout();
             this.optionsGroupBox.SuspendLayout();
+            this.xdeltaGroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // create
             // 
             this.create.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.create.Location = new System.Drawing.Point(482, 422);
+            this.create.Location = new System.Drawing.Point(476, 492);
             this.create.Name = "create";
             this.create.Size = new System.Drawing.Size(90, 40);
             this.create.TabIndex = 20;
@@ -78,7 +81,7 @@
             // 
             // clear
             // 
-            this.clear.Location = new System.Drawing.Point(401, 437);
+            this.clear.Location = new System.Drawing.Point(395, 507);
             this.clear.Name = "clear";
             this.clear.Size = new System.Drawing.Size(75, 25);
             this.clear.TabIndex = 19;
@@ -221,6 +224,7 @@
             // 
             // destinationTextBox
             // 
+            this.destinationTextBox.AllowDrop = true;
             this.destinationTextBox.Location = new System.Drawing.Point(133, 280);
             this.destinationTextBox.Name = "destinationTextBox";
             this.destinationTextBox.Size = new System.Drawing.Size(393, 20);
@@ -229,6 +233,8 @@
             // 
             // newListBox
             // 
+            this.newListBox.AllowDrop = true;
+            this.newListBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
             this.newListBox.FormattingEnabled = true;
             this.newListBox.HorizontalScrollbar = true;
             this.newListBox.Location = new System.Drawing.Point(283, 32);
@@ -237,9 +243,13 @@
             this.newListBox.Size = new System.Drawing.Size(271, 212);
             this.newListBox.TabIndex = 6;
             this.toolTip.SetToolTip(this.newListBox, "The list of files to patch to.");
+            this.newListBox.DragDrop += new System.Windows.Forms.DragEventHandler(this.newListBox_DragDrop);
+            this.newListBox.DragEnter += new System.Windows.Forms.DragEventHandler(this.newListBox_DragEnter);
             // 
             // oldListBox
             // 
+            this.oldListBox.AllowDrop = true;
+            this.oldListBox.ForeColor = System.Drawing.Color.Red;
             this.oldListBox.FormattingEnabled = true;
             this.oldListBox.HorizontalScrollbar = true;
             this.oldListBox.Location = new System.Drawing.Point(6, 32);
@@ -248,6 +258,8 @@
             this.oldListBox.Size = new System.Drawing.Size(271, 212);
             this.oldListBox.TabIndex = 1;
             this.toolTip.SetToolTip(this.oldListBox, "The list of files to patch from.");
+            this.oldListBox.DragDrop += new System.Windows.Forms.DragEventHandler(this.oldListBox_DragDrop);
+            this.oldListBox.DragEnter += new System.Windows.Forms.DragEventHandler(this.oldListBox_DragEnter);
             // 
             // label3
             // 
@@ -293,7 +305,7 @@
             this.optionsGroupBox.Controls.Add(this.fullPathCheckBox);
             this.optionsGroupBox.Location = new System.Drawing.Point(12, 324);
             this.optionsGroupBox.Name = "optionsGroupBox";
-            this.optionsGroupBox.Size = new System.Drawing.Size(560, 92);
+            this.optionsGroupBox.Size = new System.Drawing.Size(560, 93);
             this.optionsGroupBox.TabIndex = 9;
             this.optionsGroupBox.TabStop = false;
             this.optionsGroupBox.Text = "Options";
@@ -333,6 +345,8 @@
             // copyxdeltaCheckBox
             // 
             this.copyxdeltaCheckBox.AutoSize = true;
+            this.copyxdeltaCheckBox.Checked = true;
+            this.copyxdeltaCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
             this.copyxdeltaCheckBox.Location = new System.Drawing.Point(283, 19);
             this.copyxdeltaCheckBox.Name = "copyxdeltaCheckBox";
             this.copyxdeltaCheckBox.Size = new System.Drawing.Size(172, 17);
@@ -347,6 +361,7 @@
             this.patchSubDirTextBox.Name = "patchSubDirTextBox";
             this.patchSubDirTextBox.Size = new System.Drawing.Size(196, 20);
             this.patchSubDirTextBox.TabIndex = 15;
+            this.patchSubDirTextBox.Text = "vcdiff";
             this.toolTip.SetToolTip(this.patchSubDirTextBox, "Subdirectory to put the generated patch files in (relative to the root folder spe" +
         "cified above).");
             // 
@@ -396,21 +411,42 @@
             this.toolTip.InitialDelay = 1000;
             this.toolTip.ReshowDelay = 500;
             // 
+            // xdeltaargs
+            // 
+            this.xdeltaargs.Location = new System.Drawing.Point(9, 28);
+            this.xdeltaargs.Name = "xdeltaargs";
+            this.xdeltaargs.Size = new System.Drawing.Size(545, 20);
+            this.xdeltaargs.TabIndex = 21;
+            this.xdeltaargs.Text = "-B 1073741824 -e -9 -S djw -vfs";
+            this.toolTip.SetToolTip(this.xdeltaargs, "Enter all the arguments desired with single spaces between each.  Do not change i" +
+        "f unsure.");
+            // 
             // info
             // 
             this.info.AutoSize = true;
             this.info.Enabled = false;
-            this.info.Location = new System.Drawing.Point(9, 436);
+            this.info.Location = new System.Drawing.Point(9, 506);
             this.info.Name = "info";
-            this.info.Size = new System.Drawing.Size(155, 26);
+            this.info.Size = new System.Drawing.Size(290, 26);
             this.info.TabIndex = 21;
-            this.info.Text = "xdelta3 GUI by Jordi Vermeulen\r\nUses xdelta3 v3.0.8";
+            this.info.Text = "xdelta3 GUI by Jordi Vermeulen (modified by Brian Campbell)\rUses xdelta 3.1.0";
+            // 
+            // xdeltaGroupBox
+            // 
+            this.xdeltaGroupBox.Controls.Add(this.xdeltaargs);
+            this.xdeltaGroupBox.Location = new System.Drawing.Point(12, 423);
+            this.xdeltaGroupBox.Name = "xdeltaGroupBox";
+            this.xdeltaGroupBox.Size = new System.Drawing.Size(560, 63);
+            this.xdeltaGroupBox.TabIndex = 22;
+            this.xdeltaGroupBox.TabStop = false;
+            this.xdeltaGroupBox.Text = "Xdelta Arguments";
             // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(584, 474);
+            this.ClientSize = new System.Drawing.Size(584, 552);
+            this.Controls.Add(this.xdeltaGroupBox);
             this.Controls.Add(this.info);
             this.Controls.Add(this.optionsGroupBox);
             this.Controls.Add(this.filesGroupBox);
@@ -419,11 +455,13 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "Main";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "xdelta3 GUI 1.2.1";
+            this.Text = "xdelta3 GUI 2.0";
             this.filesGroupBox.ResumeLayout(false);
             this.filesGroupBox.PerformLayout();
             this.optionsGroupBox.ResumeLayout(false);
             this.optionsGroupBox.PerformLayout();
+            this.xdeltaGroupBox.ResumeLayout(false);
+            this.xdeltaGroupBox.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -462,6 +500,8 @@
         private System.Windows.Forms.Label zipNameLabel;
         private System.Windows.Forms.ToolTip toolTip;
         private System.Windows.Forms.Label info;
+        private System.Windows.Forms.GroupBox xdeltaGroupBox;
+        private System.Windows.Forms.TextBox xdeltaargs;
     }
 }
 
