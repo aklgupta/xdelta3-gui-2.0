@@ -3,7 +3,7 @@ A (rebooted) GUI for creating patches with xdelta3. Now uses xdelta3 3.1.0 with 
 Changelog includes:
 v2.0
 --------
-• Updated to use xdelta3 3.1.0 release.
+• Updated to use xdelta3 3.1.0 release.</br>
 • Enabled secondary and higher source window size (results in smaller patch files).
 • Added xdelta3 arguments line for finer control. 
 • GUI now creates a empty changelog file (2.Changelog.txt) as well as patching instructions (1.Readme.txt).
