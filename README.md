@@ -17,4 +17,13 @@ v2.0
 • Created custom logo.  
 • Updated Makepatch.bat section accordingly.  
 • Added confirmation box after patch creation.  
-• Run patch application in verbose mode.
+• Run patch application in verbose mode.  
+
+To Add
+---------
+• Add a new option where one could specify what patch extension they would like.  
+• xdelta3 source wildcard (so that any new version of xdelta can be placed in the root folder).  
+• drag and drop functionality.  
+• make gui draggable while patch making is running.  
+• Change icon in menu bar.  
+• Add a new option where one could specify what patch extension they would like.
