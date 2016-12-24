@@ -32,4 +32,4 @@ To Add
 
 Screenshots
 -----------
-<blockquote class="imgur-embed-pub" lang="en" data-id="txX4eAk"><a href="//http://imgur.com/a/bhJRV">View post on imgur.com</a></blockquote><script async src="//s.imgur.com/min/embed.js" charset="utf-8"></script>
+<blockquote class="imgur-embed-pub" lang="en" data-id="txX4eAk"><a href="//imgur.com/a/bhJRV">View post on imgur.com</a></blockquote><script async src="//s.imgur.com/min/embed.js" charset="utf-8"></script>
