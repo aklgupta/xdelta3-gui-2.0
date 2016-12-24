@@ -32,4 +32,4 @@ To Add
 
 Screenshots
 -----------
-[img]http://i.imgur.com/txX4eAk.png[/img]
+http://i.imgur.com/txX4eAk.png
