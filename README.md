@@ -23,8 +23,9 @@ To Add
 ---------
 • Add a new option where one could specify what patch extension they would like.  
 • xdelta3 source wildcard (so that any new version of xdelta can be placed in the root folder).  
-• drag and drop functionality.  
-• make gui draggable while patch making is running.  
+• Drag and drop functionality.  
+• Make gui draggable while patch making is running.  
+• Only have one instance of a cmd window when making a batch patch.
 • Change icon in menu bar.  
 • Add a new option where one could specify what patch extension they would like.  
 • Add @pause to patch making cmd and .bat application cmd.  
