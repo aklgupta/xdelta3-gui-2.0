@@ -26,8 +26,7 @@ To Add
 • Drag and drop functionality.  
 • Make gui draggable while patch making is running.  
 • Only have one instance of a cmd window when making a batch patch.  
-• Change icon in menu bar.  
-• Add a new option where one could specify what patch extension they would like.  
+• Change icon in menu bar.   
 • Add @pause to patch making cmd and .bat application cmd.  
 • Fix .zip creation (creates an empty dir)  
 
