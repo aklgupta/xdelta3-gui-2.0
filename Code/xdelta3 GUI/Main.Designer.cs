@@ -62,6 +62,8 @@
             this.xdeltaargs = new System.Windows.Forms.TextBox();
             this.info = new System.Windows.Forms.Label();
             this.xdeltaGroupBox = new System.Windows.Forms.GroupBox();
+            this.patchExtLabel = new System.Windows.Forms.Label();
+            this.patchExtTextBox = new System.Windows.Forms.TextBox();
             this.filesGroupBox.SuspendLayout();
             this.optionsGroupBox.SuspendLayout();
             this.xdeltaGroupBox.SuspendLayout();
@@ -70,7 +72,7 @@
             // create
             // 
             this.create.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.create.Location = new System.Drawing.Point(476, 492);
+            this.create.Location = new System.Drawing.Point(476, 520);
             this.create.Name = "create";
             this.create.Size = new System.Drawing.Size(90, 40);
             this.create.TabIndex = 20;
@@ -81,7 +83,7 @@
             // 
             // clear
             // 
-            this.clear.Location = new System.Drawing.Point(395, 507);
+            this.clear.Location = new System.Drawing.Point(395, 535);
             this.clear.Name = "clear";
             this.clear.Size = new System.Drawing.Size(75, 25);
             this.clear.TabIndex = 19;
@@ -295,6 +297,8 @@
             // 
             // optionsGroupBox
             // 
+            this.optionsGroupBox.Controls.Add(this.patchExtTextBox);
+            this.optionsGroupBox.Controls.Add(this.patchExtLabel);
             this.optionsGroupBox.Controls.Add(this.zipNameTextBox);
             this.optionsGroupBox.Controls.Add(this.zipNameLabel);
             this.optionsGroupBox.Controls.Add(this.zipCheckBox);
@@ -305,7 +309,7 @@
             this.optionsGroupBox.Controls.Add(this.fullPathCheckBox);
             this.optionsGroupBox.Location = new System.Drawing.Point(12, 324);
             this.optionsGroupBox.Name = "optionsGroupBox";
-            this.optionsGroupBox.Size = new System.Drawing.Size(560, 93);
+            this.optionsGroupBox.Size = new System.Drawing.Size(560, 121);
             this.optionsGroupBox.TabIndex = 9;
             this.optionsGroupBox.TabStop = false;
             this.optionsGroupBox.Text = "Options";
@@ -357,9 +361,9 @@
             // 
             // patchSubDirTextBox
             // 
-            this.patchSubDirTextBox.Location = new System.Drawing.Point(78, 66);
+            this.patchSubDirTextBox.Location = new System.Drawing.Point(97, 66);
             this.patchSubDirTextBox.Name = "patchSubDirTextBox";
-            this.patchSubDirTextBox.Size = new System.Drawing.Size(196, 20);
+            this.patchSubDirTextBox.Size = new System.Drawing.Size(177, 20);
             this.patchSubDirTextBox.TabIndex = 15;
             this.patchSubDirTextBox.Text = "vcdiff";
             this.toolTip.SetToolTip(this.patchSubDirTextBox, "Subdirectory to put the generated patch files in (relative to the root folder spe" +
@@ -425,7 +429,7 @@
             // 
             this.info.AutoSize = true;
             this.info.Enabled = false;
-            this.info.Location = new System.Drawing.Point(9, 506);
+            this.info.Location = new System.Drawing.Point(9, 534);
             this.info.Name = "info";
             this.info.Size = new System.Drawing.Size(290, 26);
             this.info.TabIndex = 21;
@@ -434,18 +438,36 @@
             // xdeltaGroupBox
             // 
             this.xdeltaGroupBox.Controls.Add(this.xdeltaargs);
-            this.xdeltaGroupBox.Location = new System.Drawing.Point(12, 423);
+            this.xdeltaGroupBox.Location = new System.Drawing.Point(12, 451);
             this.xdeltaGroupBox.Name = "xdeltaGroupBox";
             this.xdeltaGroupBox.Size = new System.Drawing.Size(560, 63);
             this.xdeltaGroupBox.TabIndex = 22;
             this.xdeltaGroupBox.TabStop = false;
             this.xdeltaGroupBox.Text = "Xdelta Arguments";
             // 
+            // patchExtLabel
+            // 
+            this.patchExtLabel.AutoSize = true;
+            this.patchExtLabel.Location = new System.Drawing.Point(7, 96);
+            this.patchExtLabel.Name = "patchExtLabel";
+            this.patchExtLabel.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.patchExtLabel.Size = new System.Drawing.Size(84, 13);
+            this.patchExtLabel.TabIndex = 19;
+            this.patchExtLabel.Text = "Patch Extension";
+            // 
+            // patchExtTextBox
+            // 
+            this.patchExtTextBox.Location = new System.Drawing.Point(97, 93);
+            this.patchExtTextBox.Name = "patchExtTextBox";
+            this.patchExtTextBox.Size = new System.Drawing.Size(177, 20);
+            this.patchExtTextBox.TabIndex = 20;
+            this.patchExtTextBox.Text = "vcdiff";
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(584, 552);
+            this.ClientSize = new System.Drawing.Size(584, 580);
             this.Controls.Add(this.xdeltaGroupBox);
             this.Controls.Add(this.info);
             this.Controls.Add(this.optionsGroupBox);
@@ -502,6 +524,8 @@
         private System.Windows.Forms.Label info;
         private System.Windows.Forms.GroupBox xdeltaGroupBox;
         private System.Windows.Forms.TextBox xdeltaargs;
+        private System.Windows.Forms.TextBox patchExtTextBox;
+        private System.Windows.Forms.Label patchExtLabel;
     }
 }
 
