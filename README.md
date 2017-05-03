@@ -1,5 +1,5 @@
 A (rebooted) GUI for creating patches with xdelta3. Now uses xdelta3 3.1.0 with some added features.
-- Moodkiller
+-by Moodkiller
 
 Changelog includes:
 v2.0.1

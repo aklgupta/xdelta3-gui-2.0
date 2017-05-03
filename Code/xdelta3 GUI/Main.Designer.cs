@@ -49,6 +49,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.optionsGroupBox = new System.Windows.Forms.GroupBox();
+            this.patchExtTextBox = new System.Windows.Forms.TextBox();
+            this.patchExtLabel = new System.Windows.Forms.Label();
             this.zipNameTextBox = new System.Windows.Forms.TextBox();
             this.zipNameLabel = new System.Windows.Forms.Label();
             this.zipCheckBox = new System.Windows.Forms.CheckBox();
@@ -62,8 +64,6 @@
             this.xdeltaargs = new System.Windows.Forms.TextBox();
             this.info = new System.Windows.Forms.Label();
             this.xdeltaGroupBox = new System.Windows.Forms.GroupBox();
-            this.patchExtLabel = new System.Windows.Forms.Label();
-            this.patchExtTextBox = new System.Windows.Forms.TextBox();
             this.filesGroupBox.SuspendLayout();
             this.optionsGroupBox.SuspendLayout();
             this.xdeltaGroupBox.SuspendLayout();
@@ -314,6 +314,24 @@
             this.optionsGroupBox.TabStop = false;
             this.optionsGroupBox.Text = "Options";
             // 
+            // patchExtTextBox
+            // 
+            this.patchExtTextBox.Location = new System.Drawing.Point(97, 93);
+            this.patchExtTextBox.Name = "patchExtTextBox";
+            this.patchExtTextBox.Size = new System.Drawing.Size(177, 20);
+            this.patchExtTextBox.TabIndex = 20;
+            this.patchExtTextBox.Text = "vcdiff";
+            // 
+            // patchExtLabel
+            // 
+            this.patchExtLabel.AutoSize = true;
+            this.patchExtLabel.Location = new System.Drawing.Point(7, 96);
+            this.patchExtLabel.Name = "patchExtLabel";
+            this.patchExtLabel.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.patchExtLabel.Size = new System.Drawing.Size(84, 13);
+            this.patchExtLabel.TabIndex = 19;
+            this.patchExtLabel.Text = "Patch Extension";
+            // 
             // zipNameTextBox
             // 
             this.zipNameTextBox.Enabled = false;
@@ -444,24 +462,6 @@
             this.xdeltaGroupBox.TabIndex = 22;
             this.xdeltaGroupBox.TabStop = false;
             this.xdeltaGroupBox.Text = "Xdelta Arguments";
-            // 
-            // patchExtLabel
-            // 
-            this.patchExtLabel.AutoSize = true;
-            this.patchExtLabel.Location = new System.Drawing.Point(7, 96);
-            this.patchExtLabel.Name = "patchExtLabel";
-            this.patchExtLabel.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.patchExtLabel.Size = new System.Drawing.Size(84, 13);
-            this.patchExtLabel.TabIndex = 19;
-            this.patchExtLabel.Text = "Patch Extension";
-            // 
-            // patchExtTextBox
-            // 
-            this.patchExtTextBox.Location = new System.Drawing.Point(97, 93);
-            this.patchExtTextBox.Name = "patchExtTextBox";
-            this.patchExtTextBox.Size = new System.Drawing.Size(177, 20);
-            this.patchExtTextBox.TabIndex = 20;
-            this.patchExtTextBox.Text = "vcdiff";
             // 
             // Main
             // 

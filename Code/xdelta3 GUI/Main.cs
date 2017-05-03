@@ -158,25 +158,37 @@ namespace xdelta3_GUI
             StreamWriter changelogWriter = new StreamWriter(dest + tempDir + "2.Changelog.txt");
             changelogWriter.Close();
 
-                //Batch creation//
+            //Batch creation//
             StreamWriter patchWriter = new StreamWriter(dest + tempDir + "3.Apply Patch.bat");
             patchWriter.WriteLine("@echo off");
             patchWriter.WriteLine("mkdir old");
+            StreamWriter tempCmdWriter = new StreamWriter(dest + tempDir + "doNotDelete.bat");
+            tempCmdWriter.WriteLine("set path = \"" + Directory.GetCurrentDirectory() + "\"");
             for (int i = 0; i < this.oldFiles.Count; i++)
             {
                 patchWriter.WriteLine(".\\" + subDir + xdeltaFileName + " -v -d -s \"{0}\" " + "\".\\" + subDir + "{0}." + patchExt + "\" \"{2}\"", this.oldFileNames[i], subDir + (i + 1).ToString(), this.newFileNames[i]);
                 patchWriter.WriteLine("move \"{0}\" old", this.oldFileNames[i]);
                 if (!batchOnlyCheckBox.Checked)
                 {
+                    tempCmdWriter.WriteLine(xdeltaFileName + " " + xdeltaargs + " " + "\"" + this.oldFiles[i] + "\" \"" + this.newFiles[i] + "\" \"" + dest + tempDir + subDir + this.oldFileNames[i] + "." + patchExt + "\"");
+                    /*
+                     * Olders Method bt MK
                     Process p = new Process();
                     p.StartInfo.FileName = xdeltaFileName;
                     p.StartInfo.Arguments = xdeltaargs + " " + "\"" + this.oldFiles[i] + "\" \"" + this.newFiles[i] + "\" \"" + dest + tempDir + subDir + this.oldFileNames[i] + "." + patchExt + "\"";
+                    //p.StartInfo.UseShellExecute = false; //This line was missing in MK version
                     p.StartInfo.CreateNoWindow = true;
                     p.Start();
                     p.WaitForExit();
+                    */
                 }
-                
             }
+            tempCmdWriter.Close();
+            Process cmd = new Process();
+            cmd.StartInfo.FileName = dest + tempDir + "doNotDelete.bat";
+            cmd.Start();
+            cmd.WaitForExit();
+            File.Delete(dest + tempDir + "doNotDelete.bat");
             patchWriter.Close();
             MessageBox.Show("Patch(s) created successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
@@ -305,10 +317,21 @@ namespace xdelta3_GUI
 
             //Loop through all dropped items and display them
             foreach (string file in OldDroppedFiles)
-                //   oldListBox.Items.Add(file);
+            //   oldListBox.Items.Add(file);
             {
-                string filename = OldGetFileName(file);
-                oldListBox.Items.Add(filename);
+                //string filename = OldGetFileName(file);
+                //oldListBox.Items.Add(filename);
+
+                if(this.oldFiles.Contains(file))
+                    continue;
+                this.oldFiles.Add(file);
+
+                string[] parts = file.Split('\\');
+                this.oldFileNames.Add(parts[parts.Length - 1]);
+
+                this.oldListBox.DataSource = null;
+                this.oldListBox.DataSource = this.fullPathCheckBox.Checked ? this.oldFiles : this.oldFileNames;
+                
             }
                   
         }
@@ -332,8 +355,20 @@ namespace xdelta3_GUI
             foreach (string file in NewDroppedFiles)
             //   newListBox.Items.Add(file);
             {
-                string filename = NewGetFileName(file);
-                newListBox.Items.Add(filename);
+                //string filename = NewGetFileName(file);
+                //newListBox.Items.Add(filename);
+
+
+                if(this.newFiles.Contains(file))
+                    continue;
+                this.newFiles.Add(file);
+
+                string[] parts = file.Split('\\');
+                this.newFileNames.Add(parts[parts.Length - 1]);
+                
+                this.newListBox.DataSource = null;
+                this.newListBox.DataSource = this.fullPathCheckBox.Checked ? this.oldFiles : this.oldFileNames;
+
             }
         }
         
@@ -407,7 +442,7 @@ namespace xdelta3_GUI
             foreach (int s in newIndices)
                 this.newListBox.SelectedIndex = s;
         }
-
+        
         private void zipCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             this.zipNameTextBox.Enabled = !this.zipNameTextBox.Enabled;
@@ -465,9 +500,6 @@ namespace xdelta3_GUI
         }
 
         #endregion
-
         
-
-                   
     }
 }
