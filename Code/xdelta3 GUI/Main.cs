@@ -35,6 +35,27 @@ namespace xdelta3_GUI
             string zipName = this.zipNameTextBox.Text;
             string patchExt = this.patchExtTextBox.Text.Trim();
 
+            //xdelta3 source wildcard
+            //Limitation:
+                //the file should be like "xdelta*.exe"
+                //the file name should NOT contain the word "GUI" (caps only)
+                //it will automatically select the first file to meet the above conditions
+            string xdeltaFileName = "";
+            string[] currentDirFiles = Directory.GetFiles(Directory.GetCurrentDirectory(), "*.exe");
+            foreach(string temp in currentDirFiles) {
+                string tempFileName = Path.GetFileName(temp);
+                if(tempFileName.StartsWith("xdelta") && !tempFileName.Contains("GUI")) {
+                    xdeltaFileName = tempFileName;
+                    break;
+                }
+            }
+
+            if(string.IsNullOrEmpty(xdeltaFileName)) {
+                MessageBox.Show("Couldn't find the xdelta application. Please make sure the file is present in the current folder.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            
+
             if (this.oldFiles.Count != this.newFiles.Count)
             {
                 MessageBox.Show("Number of files don't match. Please ensure there are the same number of files on both sides.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -143,12 +164,12 @@ namespace xdelta3_GUI
             patchWriter.WriteLine("mkdir old");
             for (int i = 0; i < this.oldFiles.Count; i++)
             {
-                patchWriter.WriteLine(".\\" + subDir + "xdelta-3.1.0-x86_64.exe -v -d -s \"{0}\" " + "\".\\" + subDir + "{0}." + patchExt + "\" \"{2}\"", this.oldFileNames[i], subDir + (i + 1).ToString(), this.newFileNames[i]);
+                patchWriter.WriteLine(".\\" + subDir + xdeltaFileName + " -v -d -s \"{0}\" " + "\".\\" + subDir + "{0}." + patchExt + "\" \"{2}\"", this.oldFileNames[i], subDir + (i + 1).ToString(), this.newFileNames[i]);
                 patchWriter.WriteLine("move \"{0}\" old", this.oldFileNames[i]);
                 if (!batchOnlyCheckBox.Checked)
                 {
                     Process p = new Process();
-                    p.StartInfo.FileName = "xdelta-3.1.0-x86_64.exe";
+                    p.StartInfo.FileName = xdeltaFileName;
                     p.StartInfo.Arguments = xdeltaargs + " " + "\"" + this.oldFiles[i] + "\" \"" + this.newFiles[i] + "\" \"" + dest + tempDir + subDir + this.oldFileNames[i] + "." + patchExt + "\"";
                     p.StartInfo.CreateNoWindow = true;
                     p.Start();
@@ -163,20 +184,20 @@ namespace xdelta3_GUI
             {
                 StreamWriter makePatchWriter = new StreamWriter(dest + "Make Patch.bat");
                 for (int i = 0; i < this.oldFiles.Count; i++)
-                    makePatchWriter.WriteLine(".\\" + subDir + "xdelta-3.1.0-x86_64.exe " + xdeltaargs + " " + "\"{0}\" \"{1}\" \"{0}." + patchExt + "\"", this.oldFiles[i], this.newFiles[i], dest + subDir + (i + 1).ToString());
-                File.Copy("xdelta-3.1.0-x86_64.exe", dest + tempDir + subDir + "xdelta-3.1.0-x86_64.exe", true);    
+                    makePatchWriter.WriteLine(".\\" + subDir + xdeltaFileName + " " + xdeltaargs + " " + "\"{0}\" \"{1}\" \"{0}." + patchExt + "\"", this.oldFiles[i], this.newFiles[i], dest + subDir + (i + 1).ToString());
+                File.Copy(xdeltaFileName, dest + tempDir + subDir + xdeltaFileName, true);    
                 makePatchWriter.Close();
 
             }
 
             if (this.copyxdeltaCheckBox.Checked)
-                File.Copy("xdelta-3.1.0-x86_64.exe", dest + tempDir + subDir + "xdelta-3.1.0-x86_64.exe", true);
+                File.Copy(xdeltaFileName, dest + tempDir + subDir + xdeltaFileName, true);
 
             if (this.zipCheckBox.Checked)
             {
                 StreamWriter listWriter = new StreamWriter(dest + tempDir + "File List.txt");
                 if (this.copyxdeltaCheckBox.Checked)
-                    listWriter.WriteLine("xdelta-3.1.0-x86_64.exe");
+                    listWriter.WriteLine(xdeltaFileName);
                 listWriter.WriteLine("Apply Patch.bat");
                 for (int i = 0; i < this.oldFiles.Count; i++)
                     listWriter.WriteLine(subDir + (i + 1).ToString() + "." + patchExt);

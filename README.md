@@ -1,9 +1,16 @@
 A (rebooted) GUI for creating patches with xdelta3. Now uses xdelta3 3.1.0 with some added features.
+- Moodkiller
+
+Changelog includes:
+v2.0.1
+--------
+• xdelta3 source wildcard (so that any new version of xdelta can be placed in the root folder).  
+• Added a new option where one could specify what patch extension they would like.
+
 
 Changelog includes:
 v2.0
 --------
-• Added a new option where one could specify what patch extension they would like.
 • Updated to use xdelta3 3.1.0 release.  
 • Enabled secondary and higher source window size (results in smaller patch files).  
 • Added xdelta3 arguments line for finer control.  
@@ -20,9 +27,9 @@ v2.0
 • Added confirmation box after patch creation.  
 • Run patch application in verbose mode.  
 
+
 To Add
 ---------
-• xdelta3 source wildcard (so that any new version of xdelta can be placed in the root folder).  
 • Drag and drop functionality.  
 • Make gui draggable while patch making is running.  
 • Only have one instance of a cmd window when making a batch patch.  
