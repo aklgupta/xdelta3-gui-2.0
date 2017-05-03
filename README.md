@@ -5,8 +5,8 @@ A (rebooted) GUI for creating patches with xdelta3. Now uses xdelta3 3.1.0 with 
 Changelog includes:
 v2.0.4
 --------
-• Drag and drop functionality.
-• Only have one instance of a cmd window when making a batch patch.
+• Drag and drop functionality.  
+• Only have one instance of a cmd window when making a batch patch.  
 
 Changelog includes:
 v2.0.2
