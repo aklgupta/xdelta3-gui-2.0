@@ -47,7 +47,7 @@ To Add
 • Make gui draggable while patch making is running.  
 • Change icon in menu bar.   
 • Add @pause to patch making cmd and .bat application cmd.  
-• Fix .zip creation (creates an empty dir)  
+• Improve/Fix the Drag and drop functionality to allow folders. Currently results in unexpected results.  
 
 Screenshots
 -----------

@@ -328,6 +328,7 @@ namespace xdelta3_GUI
                 //string filename = OldGetFileName(file);
                 //oldListBox.Items.Add(filename);
 
+                //TODO: Check if file->add it, else if directory->recursivly add files
                 if(this.oldFiles.Contains(file))
                     continue;
                 this.oldFiles.Add(file);
@@ -364,7 +365,7 @@ namespace xdelta3_GUI
                 //string filename = NewGetFileName(file);
                 //newListBox.Items.Add(filename);
 
-
+                //TODO: Check if file->add it, else if directory->recursivly add files
                 if(this.newFiles.Contains(file))
                     continue;
                 this.newFiles.Add(file);
