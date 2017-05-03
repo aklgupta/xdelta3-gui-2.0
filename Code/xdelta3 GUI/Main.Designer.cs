@@ -339,6 +339,7 @@
             this.zipNameTextBox.Name = "zipNameTextBox";
             this.zipNameTextBox.Size = new System.Drawing.Size(217, 20);
             this.zipNameTextBox.TabIndex = 18;
+            this.zipNameTextBox.Text = "patch";
             this.toolTip.SetToolTip(this.zipNameTextBox, "The name of the zip archive to create.");
             // 
             // zipNameLabel

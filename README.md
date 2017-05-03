@@ -28,4 +28,11 @@ To Add
 • Change icon in menu bar.   
 • Add @pause to patch making cmd and .bat application cmd.  
 • Improve/Fix the Drag and drop functionality to allow folders. Currently results in unexpected results.  
+• Update the version no. in GUI, other places.  
+
+Planned, Optional
+---------
+• Improve UI.  
+• Make help/add tooltips.   
+• Allow to add directories using the "Add" button.   
 
