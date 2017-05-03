@@ -3,6 +3,13 @@ A (rebooted) GUI for creating patches with xdelta3. Now uses xdelta3 3.1.0 with 
 
 
 Changelog includes:
+v2.0.5
+--------
+• Fix .zip creation  
+• Imporved the "temp" directory name generation  
+
+
+Changelog includes:
 v2.0.4
 --------
 • Drag and drop functionality.  

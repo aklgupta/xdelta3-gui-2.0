@@ -127,17 +127,20 @@ namespace xdelta3_GUI
             string tempDir = "";
             if (this.zipCheckBox.Checked)
             {
-                char[] chars = new char[17];
-                Random random = new Random();
-                for (int i = 0; i < 16; i++)
-                {
-                    int c = random.Next(48, 64);
-                    if (c > 57)
-                        c += 39;
-                    chars[i] = (char)c;
+                while(true) {
+                    char[] chars = new char[17];
+                    Random random = new Random();
+                    for(int i = 0; i < 16; i++) {
+                        int c = random.Next(48, 64);
+                        if(c > 57)
+                            c += 39;
+                        chars[i] = (char)c;
+                    }
+                    chars[16] = '\\';
+                    tempDir = new string(chars);
+                    if(!Directory.Exists(dest + tempDir))
+                        break;
                 }
-                chars[16] = '\\';
-                tempDir = new string(chars);
             }
 
             if (!Directory.Exists(dest + tempDir + subDir))
@@ -207,18 +210,21 @@ namespace xdelta3_GUI
 
             if (this.zipCheckBox.Checked)
             {
-                StreamWriter listWriter = new StreamWriter(dest + tempDir + "File List.txt");
-                if (this.copyxdeltaCheckBox.Checked)
-                    listWriter.WriteLine(xdeltaFileName);
-                listWriter.WriteLine("Apply Patch.bat");
-                for (int i = 0; i < this.oldFiles.Count; i++)
-                    listWriter.WriteLine(subDir + (i + 1).ToString() + "." + patchExt);
-                listWriter.Close();
+                zipName = (String.IsNullOrEmpty(zipName.Trim())) ? "Patch" : zipName.Trim();
+
+                //StreamWriter listWriter = new StreamWriter(dest + tempDir + "File List.txt");
+                //if (this.copyxdeltaCheckBox.Checked)
+                //    listWriter.WriteLine(xdeltaFileName);
+                //listWriter.WriteLine("Apply Patch.bat");
+                //for (int i = 0; i < this.oldFiles.Count; i++)
+                //    listWriter.WriteLine(subDir + (i + 1).ToString() + "." + patchExt);
+                //listWriter.Close();                
 
                 Process p = new Process();
                 p.StartInfo.FileName = Directory.GetCurrentDirectory() + "\\7za.exe";
                 p.StartInfo.WorkingDirectory = dest + tempDir;
-                p.StartInfo.Arguments = "a -tzip \"" + dest + zipName + ".zip\" -mx9 @\"" + dest + tempDir + "File List.txt\"";
+                //p.StartInfo.Arguments = "a -tzip \"" + dest + zipName + ".zip\" -mx9 @\"" + dest + tempDir + "File List.txt\"";
+                p.StartInfo.Arguments = "a -tzip \"" + dest + zipName + ".zip\" \"" + dest + tempDir + "*";
                 p.StartInfo.CreateNoWindow = true;
                 p.Start();
                 p.WaitForExit();
