@@ -316,31 +316,38 @@ namespace xdelta3_GUI
             return Path.GetFileNameWithoutExtension(path);
         }
 
-        private void oldListBox_DragDrop(object sender, System.Windows.Forms.DragEventArgs e)
-        {
-            //Take dropped items and store in array
-            string[] OldDroppedFiles = (string[])e.Data.GetData(DataFormats.FileDrop, false);
-
-            //Loop through all dropped items and display them
-            foreach (string file in OldDroppedFiles)
-            //   oldListBox.Items.Add(file);
-            {
-                //string filename = OldGetFileName(file);
-                //oldListBox.Items.Add(filename);
-
-                //TODO: Check if file->add it, else if directory->recursivly add files
-                if(this.oldFiles.Contains(file))
-                    continue;
-                this.oldFiles.Add(file);
-
-                string[] parts = file.Split('\\');
-                this.oldFileNames.Add(parts[parts.Length - 1]);
-
-                this.oldListBox.DataSource = null;
-                this.oldListBox.DataSource = this.fullPathCheckBox.Checked ? this.oldFiles : this.oldFileNames;
-                
+        private void oldListBox_DragDrop(object sender, System.Windows.Forms.DragEventArgs e){
+            //Create a list of all dropped files/folders only
+            List<string> droppedStringList = new List<string>();
+            if(e.Data.GetDataPresent(DataFormats.FileDrop)) { 
+                droppedStringList.AddRange((string[])e.Data.GetData(DataFormats.FileDrop, false));
             }
-                  
+
+            //Loop through all dropped items, and display all files
+            while(droppedStringList.Count > 0) {
+
+                //Select the first item in the list, and then remove it immediately
+                string path = droppedStringList[0];
+                droppedStringList.RemoveAt(0);  //IMPORTANT, should be removed immediately
+
+                //Check if the current item is file or directory
+                FileAttributes attr = File.GetAttributes(path);
+                if(attr.HasFlag(FileAttributes.Directory)) {
+                    //If directory, add all files (inc. sub folder) to the list
+                    droppedStringList.AddRange(Directory.GetFiles(path, "*", SearchOption.AllDirectories));
+                }
+                else {
+                    if(this.oldFiles.Contains(path)) {
+                        continue;
+                    }
+                    this.oldFiles.Add(path);
+                    string[] parts = path.Split('\\');
+                    this.oldFileNames.Add(parts[parts.Length - 1]);
+                }
+            }
+
+            this.oldListBox.DataSource = null;
+            this.oldListBox.DataSource = this.fullPathCheckBox.Checked ? this.oldFiles : this.oldFileNames;
         }
         
         //Enable drag and drop to NEW List//
@@ -353,30 +360,38 @@ namespace xdelta3_GUI
             return Path.GetFileNameWithoutExtension(path);
         }
 
-        private void newListBox_DragDrop(object sender, System.Windows.Forms.DragEventArgs e)
-        {
-            //Take dropped items and store in array
-            string[] NewDroppedFiles = (string[])e.Data.GetData(DataFormats.FileDrop, false);
-
-            //Loop through all dropped items and display them
-            foreach (string file in NewDroppedFiles)
-            //   newListBox.Items.Add(file);
-            {
-                //string filename = NewGetFileName(file);
-                //newListBox.Items.Add(filename);
-
-                //TODO: Check if file->add it, else if directory->recursivly add files
-                if(this.newFiles.Contains(file))
-                    continue;
-                this.newFiles.Add(file);
-
-                string[] parts = file.Split('\\');
-                this.newFileNames.Add(parts[parts.Length - 1]);
-                
-                this.newListBox.DataSource = null;
-                this.newListBox.DataSource = this.fullPathCheckBox.Checked ? this.oldFiles : this.oldFileNames;
-
+        private void newListBox_DragDrop(object sender, System.Windows.Forms.DragEventArgs e){
+            //Create a list of all dropped files/folders only
+            List<string> droppedStringList = new List<string>();
+            if(e.Data.GetDataPresent(DataFormats.FileDrop)) {
+                droppedStringList.AddRange((string[])e.Data.GetData(DataFormats.FileDrop, false));
             }
+
+            //Loop through all dropped items, and display all files
+            while(droppedStringList.Count > 0) {
+
+                //Select the first item in the list, and then remove it immediately
+                string path = droppedStringList[0];
+                droppedStringList.RemoveAt(0);  //IMPORTANT, should be removed immediately
+
+                //Check if the current item is file or directory
+                FileAttributes attr = File.GetAttributes(path);
+                if(attr.HasFlag(FileAttributes.Directory)) {
+                    //If directory, add all files (inc. sub folder) to the list
+                    droppedStringList.AddRange(Directory.GetFiles(path, "*", SearchOption.AllDirectories));
+                }
+                else {
+                    if(this.newFiles.Contains(path)) {
+                        continue;
+                    }
+                    this.newFiles.Add(path);
+                    string[] parts = path.Split('\\');
+                    this.newFileNames.Add(parts[parts.Length - 1]);
+                }
+            }
+
+            this.newListBox.DataSource = null;
+            this.newListBox.DataSource = this.fullPathCheckBox.Checked ? this.newFiles : this.newFileNames;
         }
         
         private void upOld_Click(object sender, EventArgs e) { this.move(oldListBox, oldFiles, oldFileNames, true); }
