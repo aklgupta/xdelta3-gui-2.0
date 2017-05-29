@@ -13,3 +13,18 @@ G:\My Videos 4\!Anime\!Tools\Patch maker\xdeltagui\xdelta3-gui-master\xdelta3-gu
 G:\My Videos 4\!Anime\!Tools\Patch maker\xdeltagui\xdelta3-gui-master\xdelta3-gui-master\Code\xdelta3 GUI\obj\x86\Debug\xdelta3 GUI 2.0.g.resources
 G:\My Videos 4\!Anime\!Tools\Patch maker\xdeltagui\xdelta3-gui-master\xdelta3-gui-master\Code\xdelta3 GUI\obj\x86\Debug\xdelta3 GUI 2.0.exe
 G:\My Videos 4\!Anime\!Tools\Patch maker\xdeltagui\xdelta3-gui-master\xdelta3-gui-master\Code\xdelta3 GUI\obj\x86\Debug\xdelta3 GUI 2.0.pdb
+D:\Work\Projects\xdelta3-gui-2.0\Code\xdelta3 GUI\bin\Debug\xdelta3.exe
+D:\Work\Projects\xdelta3-gui-2.0\Code\xdelta3 GUI\bin\Debug\7za.exe
+D:\Work\Projects\xdelta3-gui-2.0\Code\xdelta3 GUI\bin\Debug\xdelta3 GUI 2.0.exe
+D:\Work\Projects\xdelta3-gui-2.0\Code\xdelta3 GUI\bin\Debug\xdelta3 GUI 2.0.pdb
+D:\Work\Projects\xdelta3-gui-2.0\Code\xdelta3 GUI\bin\Debug\Microsoft.WindowsAPICodePack.dll
+D:\Work\Projects\xdelta3-gui-2.0\Code\xdelta3 GUI\bin\Debug\Microsoft.WindowsAPICodePack.ExtendedLinguisticServices.dll
+D:\Work\Projects\xdelta3-gui-2.0\Code\xdelta3 GUI\bin\Debug\Microsoft.WindowsAPICodePack.Sensors.dll
+D:\Work\Projects\xdelta3-gui-2.0\Code\xdelta3 GUI\bin\Debug\Microsoft.WindowsAPICodePack.Shell.dll
+D:\Work\Projects\xdelta3-gui-2.0\Code\xdelta3 GUI\bin\Debug\Microsoft.WindowsAPICodePack.ShellExtensions.dll
+D:\Work\Projects\xdelta3-gui-2.0\Code\xdelta3 GUI\obj\x86\Debug\xdelta3_GUI.Main.resources
+D:\Work\Projects\xdelta3-gui-2.0\Code\xdelta3 GUI\obj\x86\Debug\xdelta3_GUI.Properties.Resources.resources
+D:\Work\Projects\xdelta3-gui-2.0\Code\xdelta3 GUI\obj\x86\Debug\xdelta3 GUI.csproj.GenerateResource.Cache
+D:\Work\Projects\xdelta3-gui-2.0\Code\xdelta3 GUI\obj\x86\Debug\xdelta3 GUI 2.0.exe
+D:\Work\Projects\xdelta3-gui-2.0\Code\xdelta3 GUI\obj\x86\Debug\xdelta3 GUI 2.0.pdb
+D:\Work\Projects\xdelta3-gui-2.0\Code\xdelta3 GUI\obj\x86\Debug\xdelta3 GUI.csprojResolveAssemblyReference.cache
