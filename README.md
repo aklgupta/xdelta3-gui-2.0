@@ -43,14 +43,9 @@ v2.0.2
 To Add
 ---------
 • Make gui draggable while patch making is running.  
-• Change icon in menu bar.   
-• Add @pause to patch making cmd and .bat application cmd.  
-• Update the version no. in GUI, other places.  
+• Added MAC scripts.
 
 Planned, Optional
 ---------
 • Improve UI.  
-• During any time consuming processing, the application becomes unresponsive. Need to add a message/fix it.  
-• Make help/add tooltips.   
-• Allow to add directories using the "Add" button.   
-
+• During any time consuming processing, the application becomes unresponsive. Need to add a message/fix it.
