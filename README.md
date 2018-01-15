@@ -1,6 +1,14 @@
 A (rebooted) GUI for creating patches with xdelta3. Now uses xdelta3 3.1.0 with some added features.
 -by Moodkiller
 
+Changelog includes: v2.0.7
+--------
+• Now creates a shell script for all you Linux users so that patches can be applied.
+• Added @pause to end of 3.Apply Patch-Windows.bat so that outcome is visible.
+• Moved xdelta executables out of patch subdirectory to root for cross platform compatibility.
+• Cosmetic changes (version number now in title bar and relative files, updated tool tips).
+• Added icon to menu bar and task bar.
+
 
 Changelog includes:
 v2.0.6
