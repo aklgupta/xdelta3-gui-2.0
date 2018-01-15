@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
             this.create = new System.Windows.Forms.Button();
             this.clear = new System.Windows.Forms.Button();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
@@ -231,7 +232,7 @@
             this.destinationTextBox.Name = "destinationTextBox";
             this.destinationTextBox.Size = new System.Drawing.Size(393, 20);
             this.destinationTextBox.TabIndex = 11;
-            this.toolTip.SetToolTip(this.destinationTextBox, "The root folder for all files that will be created.");
+            this.toolTip.SetToolTip(this.destinationTextBox, "Location of the root folder for all files that will be created. Paste supported.");
             // 
             // newListBox
             // 
@@ -244,7 +245,8 @@
             this.newListBox.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
             this.newListBox.Size = new System.Drawing.Size(271, 212);
             this.newListBox.TabIndex = 6;
-            this.toolTip.SetToolTip(this.newListBox, "The list of files to patch to.");
+            this.toolTip.SetToolTip(this.newListBox, "The list of files to patch to. Drag and drop supported for files and/or directori" +
+        "es.");
             this.newListBox.DragDrop += new System.Windows.Forms.DragEventHandler(this.newListBox_DragDrop);
             this.newListBox.DragEnter += new System.Windows.Forms.DragEventHandler(this.newListBox_DragEnter);
             // 
@@ -259,7 +261,8 @@
             this.oldListBox.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
             this.oldListBox.Size = new System.Drawing.Size(271, 212);
             this.oldListBox.TabIndex = 1;
-            this.toolTip.SetToolTip(this.oldListBox, "The list of files to patch from.");
+            this.toolTip.SetToolTip(this.oldListBox, "The list of files to patch from. Drag and drop supported for files and/or directo" +
+        "ries.");
             this.oldListBox.DragDrop += new System.Windows.Forms.DragEventHandler(this.oldListBox_DragDrop);
             this.oldListBox.DragEnter += new System.Windows.Forms.DragEventHandler(this.oldListBox_DragEnter);
             // 
@@ -272,7 +275,8 @@
             this.label3.Size = new System.Drawing.Size(121, 13);
             this.label3.TabIndex = 10;
             this.label3.Text = "Patch File(s) Destination";
-            this.toolTip.SetToolTip(this.label3, "The root folder for all files that will be created.");
+            this.toolTip.SetToolTip(this.label3, "Location of the root folder for all files that will be created. Paste supported.\r" +
+        "\n");
             // 
             // label1
             // 
@@ -316,11 +320,18 @@
             // 
             // patchExtTextBox
             // 
+            this.patchExtTextBox.AutoCompleteCustomSource.AddRange(new string[] {
+            "xdelta",
+            "vcdiff",
+            "diff"});
+            this.patchExtTextBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Append;
+            this.patchExtTextBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
             this.patchExtTextBox.Location = new System.Drawing.Point(97, 93);
             this.patchExtTextBox.Name = "patchExtTextBox";
             this.patchExtTextBox.Size = new System.Drawing.Size(177, 20);
             this.patchExtTextBox.TabIndex = 20;
             this.patchExtTextBox.Text = "vcdiff";
+            this.toolTip.SetToolTip(this.patchExtTextBox, "Set the extension of the \'difference\' files for xdelta to use.\r\n");
             // 
             // patchExtLabel
             // 
@@ -331,16 +342,19 @@
             this.patchExtLabel.Size = new System.Drawing.Size(84, 13);
             this.patchExtLabel.TabIndex = 19;
             this.patchExtLabel.Text = "Patch Extension";
+            this.toolTip.SetToolTip(this.patchExtLabel, "Set the extension of the \'difference\' files for xdelta to use. Can be anything.");
             // 
             // zipNameTextBox
             // 
+            this.zipNameTextBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.zipNameTextBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.HistoryList;
             this.zipNameTextBox.Enabled = false;
             this.zipNameTextBox.Location = new System.Drawing.Point(337, 66);
             this.zipNameTextBox.Name = "zipNameTextBox";
             this.zipNameTextBox.Size = new System.Drawing.Size(217, 20);
             this.zipNameTextBox.TabIndex = 18;
             this.zipNameTextBox.Text = "patch";
-            this.toolTip.SetToolTip(this.zipNameTextBox, "The name of the zip archive to create.");
+            this.toolTip.SetToolTip(this.zipNameTextBox, "Define the name of the .zip archive to create.");
             // 
             // zipNameLabel
             // 
@@ -351,7 +365,7 @@
             this.zipNameLabel.Size = new System.Drawing.Size(51, 13);
             this.zipNameLabel.TabIndex = 6;
             this.zipNameLabel.Text = "Zip name";
-            this.toolTip.SetToolTip(this.zipNameLabel, "The name of the zip archive to create.");
+            this.toolTip.SetToolTip(this.zipNameLabel, "Define the name of the .zip archive to create.");
             // 
             // zipCheckBox
             // 
@@ -361,7 +375,7 @@
             this.zipCheckBox.Size = new System.Drawing.Size(75, 17);
             this.zipCheckBox.TabIndex = 17;
             this.zipCheckBox.Text = "Zip all files";
-            this.toolTip.SetToolTip(this.zipCheckBox, "When checked, zips all generated files.");
+            this.toolTip.SetToolTip(this.zipCheckBox, "Compress and zip all generated files.");
             this.zipCheckBox.UseVisualStyleBackColor = true;
             this.zipCheckBox.CheckedChanged += new System.EventHandler(this.zipCheckBox_CheckedChanged);
             // 
@@ -372,10 +386,10 @@
             this.copyxdeltaCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
             this.copyxdeltaCheckBox.Location = new System.Drawing.Point(283, 19);
             this.copyxdeltaCheckBox.Name = "copyxdeltaCheckBox";
-            this.copyxdeltaCheckBox.Size = new System.Drawing.Size(172, 17);
+            this.copyxdeltaCheckBox.Size = new System.Drawing.Size(227, 17);
             this.copyxdeltaCheckBox.TabIndex = 16;
-            this.copyxdeltaCheckBox.Text = "Copy xdelta3 to patch directory";
-            this.toolTip.SetToolTip(this.copyxdeltaCheckBox, "When checked, xdelta3 GUI will place a copy of xdelta3.exe in the root folder.");
+            this.copyxdeltaCheckBox.Text = "Copy xdelta3 executables to main directory";
+            this.toolTip.SetToolTip(this.copyxdeltaCheckBox, "Copy xdelta3 executables (Windows and Linux) to the main folder (recommended).");
             this.copyxdeltaCheckBox.UseVisualStyleBackColor = true;
             // 
             // patchSubDirTextBox
@@ -397,18 +411,17 @@
             this.patchSubDirLabel.TabIndex = 2;
             this.patchSubDirLabel.Text = "Patch subdir";
             this.toolTip.SetToolTip(this.patchSubDirLabel, "Subdirectory to put the generated patch files in (relative to the root folder spe" +
-        "cified above).");
+        "cified above).\r\n");
             // 
             // batchOnlyCheckBox
             // 
             this.batchOnlyCheckBox.AutoSize = true;
             this.batchOnlyCheckBox.Location = new System.Drawing.Point(9, 43);
             this.batchOnlyCheckBox.Name = "batchOnlyCheckBox";
-            this.batchOnlyCheckBox.Size = new System.Drawing.Size(92, 17);
+            this.batchOnlyCheckBox.Size = new System.Drawing.Size(214, 17);
             this.batchOnlyCheckBox.TabIndex = 14;
-            this.batchOnlyCheckBox.Text = "Batch file only";
-            this.toolTip.SetToolTip(this.batchOnlyCheckBox, "When checked, xdelta3 GUI will generate a batch file to make the patches with, bu" +
-        "t will not actually make the patches itself.");
+            this.batchOnlyCheckBox.Text = "Batch file only (for making patches later)";
+            this.toolTip.SetToolTip(this.batchOnlyCheckBox, "Generate a .bat file to make the patches later on.");
             this.batchOnlyCheckBox.UseVisualStyleBackColor = true;
             this.batchOnlyCheckBox.CheckedChanged += new System.EventHandler(this.batchOnlyCheckBox_CheckedChanged);
             // 
@@ -420,7 +433,7 @@
             this.fullPathCheckBox.Size = new System.Drawing.Size(98, 17);
             this.fullPathCheckBox.TabIndex = 13;
             this.fullPathCheckBox.Text = "Show full paths";
-            this.toolTip.SetToolTip(this.fullPathCheckBox, "When checked, shows full file paths instead of just file names.");
+            this.toolTip.SetToolTip(this.fullPathCheckBox, "Show full file paths instead of just file names in the above boxes.");
             this.fullPathCheckBox.UseVisualStyleBackColor = true;
             this.fullPathCheckBox.CheckedChanged += new System.EventHandler(this.fullPathCheckBox_CheckedChanged);
             // 
@@ -430,19 +443,25 @@
             // 
             // toolTip
             // 
-            this.toolTip.AutoPopDelay = 30000;
-            this.toolTip.InitialDelay = 1000;
-            this.toolTip.ReshowDelay = 500;
+            this.toolTip.AutoPopDelay = 5000;
+            this.toolTip.InitialDelay = 0;
+            this.toolTip.ReshowDelay = 0;
             // 
             // xdeltaargs
             // 
+            this.xdeltaargs.AutoCompleteCustomSource.AddRange(new string[] {
+            "-B 1073741824 -e -9 -S djw -vfs",
+            "-e -9 -S djw -vfs"});
+            this.xdeltaargs.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.xdeltaargs.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
             this.xdeltaargs.Location = new System.Drawing.Point(9, 28);
             this.xdeltaargs.Name = "xdeltaargs";
             this.xdeltaargs.Size = new System.Drawing.Size(545, 20);
             this.xdeltaargs.TabIndex = 21;
             this.xdeltaargs.Text = "-B 1073741824 -e -9 -S djw -vfs";
-            this.toolTip.SetToolTip(this.xdeltaargs, "Enter all the arguments desired with single spaces between each.  Do not change i" +
-        "f unsure.");
+            this.toolTip.SetToolTip(this.xdeltaargs, "Supports all xdelta flags. Enter arguments as desired with single spaces between " +
+        "each. Do not change if unsure. \r\nNOTE: remove or change -B value if programme la" +
+        "gs when making patches.");
             // 
             // info
             // 
@@ -466,8 +485,10 @@
             // 
             // Main
             // 
+            this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.ClientSize = new System.Drawing.Size(584, 580);
             this.Controls.Add(this.xdeltaGroupBox);
             this.Controls.Add(this.info);
@@ -475,10 +496,13 @@
             this.Controls.Add(this.filesGroupBox);
             this.Controls.Add(this.clear);
             this.Controls.Add(this.create);
+            this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Main";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "xdelta3 GUI 2.0";
+            this.Text = "xdelta3 GUI 2.0  v2.0.7";
+            this.Load += new System.EventHandler(this.Main_Load);
             this.filesGroupBox.ResumeLayout(false);
             this.filesGroupBox.PerformLayout();
             this.optionsGroupBox.ResumeLayout(false);
