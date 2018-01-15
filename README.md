@@ -8,6 +8,8 @@ Changelog includes: v2.0.7
 • Moved xdelta executables out of patch subdirectory to root for cross platform compatibility.  
 • Cosmetic changes (version number now in title bar and relative files, updated tool tips).  
 • Added icon to menu bar and task bar.  
+• Added auto fill options of xdelta, vcdiff and diff for the Patch Extension field.  
+• Added auto fill set of arguments in a 'drop down' style that removed the "-B 1073741824"  tag in order to lower RAM usage during patch making.  
 
 
 Changelog includes:
