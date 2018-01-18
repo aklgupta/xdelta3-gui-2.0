@@ -1,3 +1,7 @@
+Changelog includes: v2.0.8
+--------
+• Fixed 3.Apply Patch-Windows.bat creation to look in correct directory for xdelta3 executable.  
+
 Changelog includes: v2.0.7
 --------
 • Now creates a shell script for all you Linux users so that patches can be applied.

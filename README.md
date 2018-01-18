@@ -1,6 +1,10 @@
 A (rebooted) GUI for creating patches with xdelta3. Now uses xdelta3 3.1.0 with some added features.
 -by Moodkiller
 
+Changelog includes: v2.0.8
+--------
+• Fixed 3.Apply Patch-Windows.bat creation to look in correct directory for xdelta3 executable.  
+
 Changelog includes: v2.0.7
 --------
 • Now creates a shell script for all you Linux users so that patches can be applied.  
@@ -8,8 +12,6 @@ Changelog includes: v2.0.7
 • Moved xdelta executables out of patch subdirectory to root for cross platform compatibility.  
 • Cosmetic changes (version number now in title bar and relative files, updated tool tips).  
 • Added icon to menu bar and task bar.  
-• Added auto fill options of xdelta, vcdiff and diff for the Patch Extension field.  
-• Added auto fill set of arguments in a 'drop down' style that removed the "-B 1073741824"  tag in order to lower RAM usage during patch making.  
 
 
 Changelog includes:
@@ -45,9 +47,14 @@ v2.0.2
 To Add
 ---------
 • Make gui draggable while patch making is running.  
-• Added MAC scripts.
+• Change icon in menu bar.   
+• Add @pause to patch making cmd and .bat application cmd.  
+• Update the version no. in GUI, other places.  
 
 Planned, Optional
 ---------
 • Improve UI.  
-• During any time consuming processing, the application becomes unresponsive. Need to add a message/fix it.
+• During any time consuming processing, the application becomes unresponsive. Need to add a message/fix it.  
+• Make help/add tooltips.   
+• Allow to add directories using the "Add" button.   
+

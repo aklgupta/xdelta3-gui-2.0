@@ -183,7 +183,7 @@ namespace xdelta3_GUI
             tempCmdWriter.WriteLine("set path = \"" + Directory.GetCurrentDirectory() + "\"");
             for (int i = 0; i < this.oldFiles.Count; i++)
             {
-                patchWriterWindows.WriteLine(".\\" + subDir + "\\" + xdeltaFileName + " -v -d -s \"{0}\" " + "\".\\" + subDir + "\\" + "{0}." + patchExt + "\" \"{2}\"", this.oldFileNames[i], subDir + "\\" + (i + 1).ToString(), this.newFileNames[i]);
+                patchWriterWindows.WriteLine(".\\" + xdeltaFileName + " -v -d -s \"{0}\" " + "\".\\" + subDir + "\\" + "{0}." + patchExt + "\" \"{2}\"", this.oldFileNames[i], subDir + "\\" + (i + 1).ToString(), this.newFileNames[i]);
                 patchWriterWindows.WriteLine("move \"{0}\" old", this.oldFileNames[i]);
                 // Batch creation - Linux //
                 patchWriterLinux.WriteLine("` " + "xdelta3" + " -v -d -s \"{0}\" " + '"' + subDir + '/' + "{0}." + patchExt + "\" \"{2}\"" + "`", this.oldFileNames[i], subDir + (i + 1).ToString(), this.newFileNames[i]);
