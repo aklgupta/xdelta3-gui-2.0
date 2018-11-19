@@ -34,7 +34,7 @@ namespace xdelta3_GUI
             string xdeltaargs = this.xdeltaargs.Text;
             string zipName = this.zipNameTextBox.Text;
             string patchExt = this.patchExtTextBox.Text.Trim();
-
+            string xdeltaLinux = "./xdelta3";
             //xdelta3 source wildcard
             //Limitation:
                 //the file should be like "xdelta*.exe"
@@ -121,8 +121,8 @@ namespace xdelta3_GUI
 
             dest = (dest.EndsWith("\\") || dest.EndsWith("/")) ? dest : dest + "\\";
 
-            if (subDir != "")
-                subDir += "\\";
+            //if (subDir != "")
+            //    subDir += "\\";
 
             string tempDir = "";
             if (this.zipCheckBox.Checked)
@@ -151,62 +151,77 @@ namespace xdelta3_GUI
             //Patch creater//
                 //Readme.txt creation//
             StreamWriter readmeWriter = new StreamWriter(dest + tempDir + "1.Readme.txt");
+            readmeWriter.WriteLine("Windows:");
             readmeWriter.WriteLine("1. Copy your original files into this folder. DO NOT RENAME!!"); 
-            readmeWriter.WriteLine("2. Run the 3.Apply Patch file, a CMD window will open and will start patching automatically.");
-            readmeWriter.WriteLine("3. Once patching is complete you will find your new files in the main folder and the orginals in a folder called 'Old'.");
+            readmeWriter.WriteLine("2. Double click the 3.Apply Patch-Windows.bat file, a CMD window will open and will start patching automatically.");
+            readmeWriter.WriteLine("3. Once patching is complete you will find your new files in the main folder and the originals in a folder called 'old'.");
             readmeWriter.WriteLine("4. Enjoy.");
+            readmeWriter.WriteLine("");
+            readmeWriter.WriteLine("Linux:");
+            readmeWriter.WriteLine("1. Copy your original files into this folder. DO NOT RENAME!!");
+            readmeWriter.WriteLine("2. In terminal, type: sh " + '"' + "3.Apply Patch-Linux.sh" + '"' + ". Patching should start automatically.");
+            readmeWriter.WriteLine("3. Alternatively, if you're using a GUI, double click 3.Apply Patch-Linux.sh and a terminal window should appear.");
+            readmeWriter.WriteLine("4. Once patching is complete, you will find your new files in the main folder and the originals in a folder called 'old'.");
+            readmeWriter.WriteLine("5. Enjoy.");
             readmeWriter.Close();
 
                 //Changelog.txt creation//
             StreamWriter changelogWriter = new StreamWriter(dest + tempDir + "2.Changelog.txt");
             changelogWriter.Close();
 
-            //Batch creation//
-            StreamWriter patchWriter = new StreamWriter(dest + tempDir + "3.Apply Patch.bat");
-            patchWriter.WriteLine("@echo off");
-            patchWriter.WriteLine("mkdir old");
-            StreamWriter tempCmdWriter = new StreamWriter(dest + tempDir + "doNotDelete.bat");
+            //Batch creation - Windows//
+            StreamWriter patchWriterWindows = new StreamWriter(dest + tempDir + "3.Apply Patch-Windows.bat");
+            patchWriterWindows.WriteLine("@echo off");
+            patchWriterWindows.WriteLine("mkdir old");
+            // Batch creation - Linux //
+            StreamWriter patchWriterLinux = new StreamWriter(dest + tempDir + "3.Apply Patch-Linux.sh");
+            patchWriterLinux.WriteLine("` #!/bin/sh`");
+            patchWriterLinux.WriteLine("` mkdir old`");
+            patchWriterLinux.WriteLine("` chmod +x xdelta3`");
+            //
+            StreamWriter tempCmdWriter = new StreamWriter(dest + tempDir + "doNotDelete-Windows.bat");
             tempCmdWriter.WriteLine("set path = \"" + Directory.GetCurrentDirectory() + "\"");
             for (int i = 0; i < this.oldFiles.Count; i++)
             {
-                patchWriter.WriteLine(".\\" + subDir + xdeltaFileName + " -v -d -s \"{0}\" " + "\".\\" + subDir + "{0}." + patchExt + "\" \"{2}\"", this.oldFileNames[i], subDir + (i + 1).ToString(), this.newFileNames[i]);
-                patchWriter.WriteLine("move \"{0}\" old", this.oldFileNames[i]);
+                patchWriterWindows.WriteLine(".\\" + xdeltaFileName + " -v -d -s \"{0}\" " + "\".\\" + subDir + "\\" + "{0}." + patchExt + "\" \"{2}\"", this.oldFileNames[i], subDir + "\\" + (i + 1).ToString(), this.newFileNames[i]);
+                patchWriterWindows.WriteLine("move \"{0}\" old", this.oldFileNames[i]);
+                // Batch creation - Linux //
+                patchWriterLinux.WriteLine("` " + "xdelta3" + " -v -d -s \"{0}\" " + '"' + subDir + '/' + "{0}." + patchExt + "\" \"{2}\"" + "`", this.oldFileNames[i], subDir + (i + 1).ToString(), this.newFileNames[i]);
+                patchWriterLinux.WriteLine("` mv \"{0}\" old`", this.oldFileNames[i]);
+                //
                 if (!batchOnlyCheckBox.Checked)
                 {
-                    tempCmdWriter.WriteLine(xdeltaFileName + " " + xdeltaargs + " " + "\"" + this.oldFiles[i] + "\" \"" + this.newFiles[i] + "\" \"" + dest + tempDir + subDir + this.oldFileNames[i] + "." + patchExt + "\"");
-                    /*
-                     * Olders Method bt MK
-                    Process p = new Process();
-                    p.StartInfo.FileName = xdeltaFileName;
-                    p.StartInfo.Arguments = xdeltaargs + " " + "\"" + this.oldFiles[i] + "\" \"" + this.newFiles[i] + "\" \"" + dest + tempDir + subDir + this.oldFileNames[i] + "." + patchExt + "\"";
-                    //p.StartInfo.UseShellExecute = false; //This line was missing in MK version
-                    p.StartInfo.CreateNoWindow = true;
-                    p.Start();
-                    p.WaitForExit();
-                    */
+                    tempCmdWriter.WriteLine(xdeltaFileName + " " + xdeltaargs + " " + "\"" + this.oldFiles[i] + "\" \"" + this.newFiles[i] + "\" \"" + dest + tempDir + subDir + "\\" + this.oldFileNames[i] + "." + patchExt + "\"");
                 }
+
             }
+            patchWriterWindows.WriteLine("echo Completed!");
+            patchWriterWindows.WriteLine("@pause");
+            patchWriterLinux.Close();
+
+            // Temp .bat creation for single CMD window - WINDOWS //
             tempCmdWriter.Close();
-            Process cmd = new Process();
-            cmd.StartInfo.FileName = dest + tempDir + "doNotDelete.bat";
-            cmd.Start();
-            cmd.WaitForExit();
-            File.Delete(dest + tempDir + "doNotDelete.bat");
-            patchWriter.Close();
+            Process cmdWindows = new Process();
+            cmdWindows.StartInfo.FileName = dest + tempDir + "doNotDelete-Windows.bat";
+            cmdWindows.Start();
+            cmdWindows.WaitForExit();
+            File.Delete(dest + tempDir + "doNotDelete-Windows.bat");
+            patchWriterWindows.Close();
             MessageBox.Show("Patch(s) created successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             if (this.batchOnlyCheckBox.Checked)
             {
                 StreamWriter makePatchWriter = new StreamWriter(dest + "Make Patch.bat");
                 for (int i = 0; i < this.oldFiles.Count; i++)
-                    makePatchWriter.WriteLine(".\\" + subDir + xdeltaFileName + " " + xdeltaargs + " " + "\"{0}\" \"{1}\" \"{0}." + patchExt + "\"", this.oldFiles[i], this.newFiles[i], dest + subDir + (i + 1).ToString());
-                File.Copy(xdeltaFileName, dest + tempDir + subDir + xdeltaFileName, true);    
+                    makePatchWriter.WriteLine(".\\" + subDir + "\\" + xdeltaFileName + " " + xdeltaargs + " " + "\"{0}\" \"{1}\" \"{0}." + patchExt + "\"", this.oldFiles[i], this.newFiles[i], dest + subDir + "\\" + (i + 1).ToString());
+                File.Copy(xdeltaFileName, dest + tempDir + subDir + "\\" + xdeltaFileName, true);    
                 makePatchWriter.Close();
 
             }
 
             if (this.copyxdeltaCheckBox.Checked)
-                File.Copy(xdeltaFileName, dest + tempDir + subDir + xdeltaFileName, true);
+                File.Copy(xdeltaFileName, dest + tempDir + xdeltaFileName, true);
+                File.Copy(xdeltaLinux, dest + tempDir + "xdelta3", true);
 
             if (this.zipCheckBox.Checked)
             {
@@ -464,7 +479,12 @@ namespace xdelta3_GUI
             foreach (int s in newIndices)
                 this.newListBox.SelectedIndex = s;
         }
-        
+
+        private void Main_Load(object sender, EventArgs e)
+        {
+
+        }
+
         private void zipCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             this.zipNameTextBox.Enabled = !this.zipNameTextBox.Enabled;
